@@ -13,5 +13,9 @@ The project is to create a Distributed computing tool to have bogo sort run on s
   
 ### Instructions:
 
+
+
 How does the user install/compile/run the program.
 How does the user interact with this program?
+
+
