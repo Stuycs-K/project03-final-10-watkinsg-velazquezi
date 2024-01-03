@@ -3,7 +3,7 @@
 ## Gus Watkins
 
 ### 2024-01-03 - Brief description
-Expanded description including how much time was spent on task.
+Brainstormed for project ideas, then thought through the general implementation and began work on PROPOSAL.md
 
 ### 2024-01-04 - Brief description
 Expanded description including how much time was spent on task.

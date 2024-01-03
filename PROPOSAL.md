@@ -2,15 +2,17 @@
 
 ## Group Members:
 
-names here.
+Gus Watkins
+
+Israel Velazquez Rugama
        
 # Intentions:
-
-A statement of the problem you are solving and/or a high level description of the project.
     
+The goal of this project is to create a tool for easy distributed computing. The server will send tasks to connected machines and handle results coming from clients.
+
 # Intended usage:
 
-A description as to how the project will be used (describe the user interface).
+One machine will be used as a server and will run a program that opens a port. Any number of client machines can connect to that port to join the distributed project.
   
 # Technical Details:
 
@@ -23,7 +25,13 @@ How you are breaking down the project and who is responsible for which parts.
 What data structures you will be using and how.
      
 What algorithms and /or data structures you will be using, and how.
+
+TODO
+
+draft for above: client program, server program, networking, data structures (linked list for list of clients?), networking etc
     
 # Intended pacing:
 
 A timeline with expected completion dates of parts of the project.
+
+TODO
