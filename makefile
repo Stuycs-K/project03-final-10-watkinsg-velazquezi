@@ -2,6 +2,11 @@
 
 compile: client server
 
+Server: server
+	@./server $(ARGS)
+Client: client
+	@./client $(ARGS)
+
 client: client.o networking.o
 	@gcc -o client client.o networking.o
 
