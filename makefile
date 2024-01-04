@@ -18,6 +18,4 @@ networking.o: networking.c
 	@gcc -c networking.c
 
 clean:
-	@rm -f *.o
-	@rm -f server
-	@rm -f client
+	@rm *.o client server -f

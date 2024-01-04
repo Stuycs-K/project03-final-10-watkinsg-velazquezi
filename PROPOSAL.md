@@ -30,4 +30,13 @@ We'll be using arrays to manage the socket descriptors for the client and for th
 
 A timeline with expected completion dates of parts of the project.
 
-TODO
+1/8/2024 - Finish how the bogus sort works on the clients and makes sure to return the output to the server to test it's end result
+
+1/10/2024 - Baseline implementation of how the server displays the output each client outputs
+
+1/12/2024 - Finish the setup to properly handle how the server deligates the workload onto the different clients and makes sure to recieve the output correctly
+
+1/14/2024 - Display individual client's outputs and possibly have a display feature to view
+
+1/16/2024 - Prepare presentation materials and make sure to have some visuals to describe how our project works and possibily allow others to join the presentation
+
