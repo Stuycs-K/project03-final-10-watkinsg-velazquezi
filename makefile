@@ -1,4 +1,4 @@
-.PHONY: compile clean
+.PHONY: compile clean Server Client
 
 compile: client server
 
