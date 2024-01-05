@@ -27,6 +27,7 @@ struct packet {
 #define NETWORKING_H
 #define PORT "19230"
 #define BUFFER_SIZE 1024
+void copyArr(int dest[], int copying[], int size);
 void err(int i, char*message);
 int server_setup();
 int client_tcp_handshake(char*server_address);

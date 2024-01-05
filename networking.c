@@ -1,5 +1,11 @@
 #include "networking.h"
 
+void copyArr(int dest[], int copying[], int size) {
+  for (int i=0; i<size; i++) {
+    dest[i] = copying[i];
+  }
+}
+
 void bogoSort(int arr[], int size) {
   while (1) {
     for (int i=0; i<size; i++) {
@@ -90,7 +96,17 @@ int server_setup() {
 }
 
 int clientLogic(int server_socket) {
-  // struct packet data = malloc(1, sizeof(struct packet));
+  struct packet *data = malloc(sizeof(struct packet));
+  int bytes = read(server_socket, data, sizeof(struct packet));
+  err(bytes, "Server error");
+  int type = data->type;
+  int arr[10];
+  copyArr(arr, data->arr, 10);
+  int seeds[10];
+  copyArr(seeds, data->seeds, 10);
+  while (1) {
+    
+  }
 }
 
 int server_tcp_handshake(int listen_socket) {
