@@ -100,7 +100,7 @@ int clientLogic(int server_socket) {
   int bytes = read(server_socket, data, sizeof(struct packet));
   err(bytes, "Server error");
   int type = data->type;
-  int arr[POCKET_SIZE];
+  int arr[PACKET_SIZE];
   copyArr(arr, data->arr, PACKET_SIZE);
   int seeds[PACKET_SIZE];
   copyArr(seeds, data->seeds, PACKET_SIZE);
