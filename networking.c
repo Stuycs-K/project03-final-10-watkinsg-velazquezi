@@ -105,7 +105,11 @@ int clientLogic(int server_socket) {
   int seeds[10];
   copyArr(seeds, data->seeds, 10);
   while (1) {
-    
+    read(server_socket, data, sizeof(struct packet));
+    if (type==-1) {
+      close(server_socket);
+      exit(0);
+    }
   }
 }
 
