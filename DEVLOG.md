@@ -5,8 +5,8 @@
 ### 2024-01-03 - Brief description
 Brainstormed for project ideas, then thought through the general implementation and began work on PROPOSAL.md
 
-### 2024-01-04 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-04 - proposal+begin initial server
+Wrapped up work on the proposal and began working on a basic server
 
 ### 2024-01-05 - Brief description
 Expanded description including how much time was spent on task.
