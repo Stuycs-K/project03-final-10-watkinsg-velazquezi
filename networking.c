@@ -8,11 +8,18 @@ void bogoSort(int arr[], int size) {
   }
 }
 
+void err(int i, char*message){
+  if(i < 0){
+	  printf("Error: %s - %s\n",message, strerror(errno));
+  	exit(1);
+  }
+}
+
 int ran(int size) {
   int r_file = open("/dev/random", O_RDONLY , 0);
   int buff[size];
   size = read(r_file, buff, size);
-  if(size == -1)err();
+  err(size, "file not found");
   int number = 0;
   int increase = 0;
   for (int i=1; i<=size; i++) {
@@ -25,11 +32,31 @@ int ran(int size) {
   return number;
 }
 
-void err(int i, char*message){
-  if(i < 0){
-	  printf("Error: %s - %s\n",message, strerror(errno));
-  	exit(1);
+int client_tcp_handshake(char * server_address) {
+
+  struct addrinfo * hints, * results;
+  hints = calloc(1,sizeof(struct addrinfo));
+  hints->ai_family = AF_INET;
+  hints->ai_socktype = SOCK_STREAM; //TCP socket
+  if (!strcmp(server_address, "Null")) {
+    getaddrinfo(NULL, PORT, hints, &results);
   }
+  else {
+    getaddrinfo(server_address, PORT, hints, &results);
+  }
+    //Server sets node to NULL
+
+  //getaddrinfo
+  
+  int sd = socket(results->ai_family, results->ai_socktype, 0);
+  //create the socket
+  connect(sd, results->ai_addr, results->ai_addrlen);
+  //connect to the server
+  
+  free(hints);
+  freeaddrinfo(results);
+
+  return sd;
 }
 
 int server_setup() {
@@ -60,4 +87,16 @@ int server_setup() {
   freeaddrinfo(results);
   
   return clientd;
+}
+
+int clientLogic(int server_socket) {
+
+}
+
+int subserver_logic(int client_socket) {
+
+}
+
+int server_tcp_handshake(int listen_socket) {
+  
 }
