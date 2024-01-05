@@ -11,6 +11,17 @@
 #include <sys/socket.h> 
 #include <netdb.h>
 
+#define PACKET_STOP -1
+#define PACKET_REQUEST 0
+#define PACKET_RESULT 1
+#define PACKET_INFO 2
+
+struct packet {
+    int type;
+    int arr[10];
+    int seeds[10];
+}
+
 
 #ifndef NETWORKING_H
 #define NETWORKING_H
