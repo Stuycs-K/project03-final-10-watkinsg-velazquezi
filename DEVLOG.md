@@ -2,7 +2,7 @@
 
 ## Gus Watkins
 
-### 2024-01-03 - brainstorming+proposal
+### 2024-01-03 - Brief description
 Brainstormed for project ideas, then thought through the general implementation and began work on PROPOSAL.md
 
 ### 2024-01-04 - Brief description
