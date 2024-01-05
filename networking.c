@@ -93,10 +93,6 @@ int clientLogic(int server_socket) {
   // struct packet data = malloc(1, sizeof(struct packet));
 }
 
-int subserver_logic(int client_socket) {
-
-}
-
 int server_tcp_handshake(int listen_socket) {
   
 }
