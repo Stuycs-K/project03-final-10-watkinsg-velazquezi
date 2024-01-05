@@ -7,9 +7,11 @@ void copyArr(int dest[], int copying[], int size) {
 }
 
 void bogoSort(int arr[], int size, int random) {
+  int arrCopy[PACKET_SIZE];
+  copyArr(arrCopy, arr, size);
   while (1) {
     for (int i=0; i<size; i++) {
-      
+      arr[i] = arrCopyp[(random+i)%size];
     }
   }
 }

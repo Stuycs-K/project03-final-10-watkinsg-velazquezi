@@ -24,8 +24,8 @@ Added base codefiles and makefile, potentially to be changed later
 worked on the proposal and talked about the pacing of how we will do our assignment
 Updated the network file with methods in order to make sure it compiles and added some code to the client to make it connect to the server
 
-### 2024-01-05 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-05 - Client recieving / sorting
+Worked on the variables the client uses to recieve the data from the server, and starting to work on how to make the seeds work with bogosort
 
 ### 2024-01-08 - Brief description
 Expanded description including how much time was spent on task.
