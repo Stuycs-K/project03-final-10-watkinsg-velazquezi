@@ -1,4 +1,7 @@
 .vscode
+.idea
+client
+server
 
 # Prerequisites
 *.d
