@@ -17,11 +17,12 @@
 #define PACKET_INFO 2
 
 #define PACKET_SIZE 10
+#define PACKET_SEEDS 10
 
 struct packet {
     int type;
     int arr[PACKET_SIZE];
-    int seeds[PACKET_SIZE];
+    int seeds[PACKET_SEEDS];
 };
 
 

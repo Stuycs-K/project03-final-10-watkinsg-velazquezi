@@ -6,7 +6,7 @@ void copyArr(int dest[], int copying[], int size) {
   }
 }
 
-void bogoSort(int arr[], int size) {
+void bogoSort(int arr[], int size, int random) {
   while (1) {
     for (int i=0; i<size; i++) {
       
@@ -111,7 +111,7 @@ int clientLogic(int server_socket) {
       close(server_socket);
       exit(0);
     }
-    bogoSort(arr, PACKET_SIZE);
+    bogoSort(arr, PACKET_SIZE, rand());
   }
 }
 
