@@ -80,7 +80,7 @@ int server_setup() {
   bind(clientd, results->ai_addr, results->ai_addrlen);
   
   //set socket to listen state
-  listen(clientd, 100);
+  listen(clientd, 10);
 
   //free the structs used by getaddrinfo
   free(hints);
