@@ -100,17 +100,23 @@ int clientLogic(int server_socket) {
   int bytes = read(server_socket, data, sizeof(struct packet));
   err(bytes, "Server error");
   int type = data->type;
-  int arr[10];
-  copyArr(arr, data->arr, 10);
-  int seeds[10];
-  copyArr(seeds, data->seeds, 10);
-  while (1) {
+  int arr[POCKET_SIZE];
+  copyArr(arr, data->arr, PACKET_SIZE);
+  int seeds[PACKET_SIZE];
+  copyArr(seeds, data->seeds, PACKET_SIZE);
+  for (int i=0; i<PACKET_SIZE; i++) {
+    srand(seeds[i]);
     read(server_socket, data, sizeof(struct packet));
     if (type==-1) {
       close(server_socket);
       exit(0);
     }
+    bogoSort(arr, PACKET_SIZE);
   }
+}
+
+int subserver_logic(int client_socket) {
+
 }
 
 int server_tcp_handshake(int listen_socket) {
