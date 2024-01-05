@@ -8,8 +8,9 @@ Brainstormed for project ideas, then thought through the general implementation 
 ### 2024-01-04 - proposal+begin initial server
 Wrapped up work on the proposal and began working on a basic server
 
-### 2024-01-05 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-05 - Client-server communication work, select()
+Worked on figuring out how the client and server should communicate, and ended up with a `struct packet` in `networking.h`.
+Spent the rest of the time figuring out `select()` and how to use it in the server to manage all the clients without forking.
 
 ### 2024-01-08 - Brief description
 Expanded description including how much time was spent on task.
