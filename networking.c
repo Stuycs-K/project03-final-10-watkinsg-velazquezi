@@ -113,10 +113,6 @@ int clientLogic(int server_socket) {
   }
 }
 
-int subserver_logic(int client_socket) {
-
-}
-
 int server_tcp_handshake(int listen_socket) {
   
 }
