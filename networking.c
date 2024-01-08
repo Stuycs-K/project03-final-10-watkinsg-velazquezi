@@ -6,6 +6,12 @@ void copyArr(int dest[], int copying[], int size) {
   }
 }
 
+void removeIndex(int arr[], int size, int index) {
+  for (int i=index; i<size; i++) {
+    arr[i] = arr[i+1];
+  }
+}
+
 void bogoSort(int arr[], int size, int random, int copy[]) {
   srand(random);
   copyArr(copy, arr, size);
@@ -122,18 +128,18 @@ int clientLogic(int server_socket) {
 }
 
 int subserver_logic(int client_socket) {
-  // struct packet *data = malloc(sizeof(struct packet));
-  // int arr[PACKET_SIZE];
-  // int seeds[PACKET_SEEDS];
-  // read(client_socket, data, sizeof(struct packet));
-  // arrCopy(arr, data->arr, PACKET_SIZE);
+  struct packet *data = malloc(sizeof(struct packet));
+  int arr[PACKET_SIZE];
+  int seeds[PACKET_SEEDS];
+  read(client_socket, data, sizeof(struct packet));
+  copyArr(arr, data->arr, PACKET_SIZE);
 
-  // for (int i=0; i<PACKET_SIZE; i++) {
-  //   for (int j=0; j<arr[i]; j++) {
-  //     printf("color");
-  //   }
-  //   printf("color_reset\n");
-  // }
+  for (int i=0; i<PACKET_SIZE; i++) {
+    for (int j=0; j<arr[i]; j++) {
+      printf("\e[0;%d>", (i%8)+30);
+    }
+    printf("\e[40m\n");
+  }
 }
 
 int server_tcp_handshake(int listen_socket) {
