@@ -115,23 +115,14 @@ int clientLogic(int server_socket) {
   int seeds[PACKET_SEEDS];
   copyArr(seeds, data->seeds, PACKET_SIZE);
   for (int i=0; i<PACKET_SIZE; i++) {
-<<<<<<< HEAD
-    int copy[PACKET_SIZE];
-=======
->>>>>>> IsraelsBranch
     read(server_socket, data, sizeof(struct packet));
     if (type==-1) {
       close(server_socket);
       exit(0);
     }
     bogoSort(arr, PACKET_SIZE, seeds[i], copy);
-<<<<<<< HEAD
     data->type = PACKET_RESULT;
     copyArr(data->arr, copy, PACKET_SIZE);
-=======
-    copyArr(data->arr, copy, PACKET_SIZE);
-    data->type = PACKET_RESULT;
->>>>>>> IsraelsBranch
     write(server_socket, data, sizeof(struct packet));
   }
 }
