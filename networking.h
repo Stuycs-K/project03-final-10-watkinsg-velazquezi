@@ -37,4 +37,5 @@ int server_setup();
 int client_tcp_handshake(char*server_address);
 int server_tcp_handshake(int listen_socket);
 int clientLogic(int server_socket);
+int subserver_logic(int client_socket);
 #endif

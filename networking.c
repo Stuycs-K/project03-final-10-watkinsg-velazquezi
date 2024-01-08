@@ -148,6 +148,11 @@ int subserver_logic(int client_socket) {
 
 }
 
-int server_tcp_handshake(int listen_socket) {
+int server_tcp_handshake(int listen_socket){
+  int client_socket;
+
+  //accept the client connection
+  client_socket = accept(listen_socket, NULL, NULL);
   
+  return client_socket;
 }
