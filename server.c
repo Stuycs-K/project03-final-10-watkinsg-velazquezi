@@ -21,6 +21,7 @@ int main(int argc, char *argv[] ) {
     }
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       char input[100];
+      printf("Please input something: ");
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
     }
