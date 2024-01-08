@@ -15,6 +15,18 @@ Spent the rest of the time figuring out `select()` and how to use it in the serv
 ### 2024-01-08 - Brief description
 Expanded description including how much time was spent on task.
 
+### 2024-01-09 - Brief description
+Expanded description including how much time was spent on task.
+
+### 2024-01-10 - Brief description
+Expanded description including how much time was spent on task.
+
+### 2024-01-11 - Brief description
+Expanded description including how much time was spent on task.
+
+### 2024-01-12 - Brief description
+Expanded description including how much time was spent on task.
+
 ## Israel Velazquez
 
 ### 2024-01-03 - worked on readme / proposal
@@ -31,3 +43,15 @@ Finished BogoSort, added send feature to client, added to the server, included c
 
 ### 2024-01-08 - Completed Bogo, working on server visuals
 The BogoSort now works randomly based off of the seed you give it, and the server now has the method made to show visuals once it's ready to show off it's clients. Has different colors to help see the difference
+
+### 2024-01-09 - Brief description
+Expanded description including how much time was spent on task.
+
+### 2024-01-10 - Brief description
+Expanded description including how much time was spent on task.
+
+### 2024-01-11 - Brief description
+Expanded description including how much time was spent on task.
+
+### 2024-01-12 - Brief description
+Expanded description including how much time was spent on task.
