@@ -27,6 +27,7 @@ Updated the network file with methods in order to make sure it compiles and adde
 
 ### 2024-01-05 - Client recieving / sorting
 Worked on the variables the client uses to recieve the data from the server, and starting to work on how to make the seeds work with bogosort
+Finished BogoSort, added send feature to client
 
 ### 2024-01-08 - Brief description
 Expanded description including how much time was spent on task.

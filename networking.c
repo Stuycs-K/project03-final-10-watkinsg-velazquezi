@@ -123,6 +123,29 @@ int clientLogic(int server_socket) {
 
 int subserver_logic(int client_socket) {
 
+  /* 
+    as for how the server should display the data, I'm imagining the server should
+    just show one client for now, and we could use print commands to display how big
+    each int is, going to add base code here
+  */
+
+ struct packet *data = malloc(sizeof(struct packet));
+
+ int bytes = read(client_socket, data, sizeof(struct packet));
+ err(bytes, "client error");
+
+ int arr[PACKET_SIZE];
+ copyArr(arr, data->arr, PACKET_SIZE);
+
+ for (int i=0; i<PACKET_SIZE; i++) {
+  
+  for (int j=0; j<arr[i]; j++) {
+    printf("\033[%dm;%dm>", (i%8)+30, (arr[i]%8)+40);
+  }
+  printf("\033[0m\n");
+
+ }
+
 }
 
 int server_tcp_handshake(int listen_socket) {
