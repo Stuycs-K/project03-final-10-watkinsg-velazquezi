@@ -6,13 +6,14 @@ void copyArr(int dest[], int copying[], int size) {
   }
 }
 
-void bogoSort(int arr[], int size, int random) {
-  int arrCopy[PACKET_SIZE];
-  copyArr(arrCopy, arr, size);
-  while (1) {
-    for (int i=0; i<size; i++) {
-      arr[i] = arrCopyp[(random+i)%size];
-    }
+void bogoSort(int arr[], int size, int random, int copy[]) {
+  srand(random);
+  copyArr(copy, arr, size);
+  for (int i=0; i<size; i++) {
+    int x = rand()%size;
+    int temp = copy[x];
+    copy[x] = copy[i];
+    copy[i] = temp;
   }
 }
 
@@ -103,22 +104,36 @@ int clientLogic(int server_socket) {
   err(bytes, "Server error");
   int type = data->type;
   int arr[PACKET_SIZE];
+  int copy[PACKET_SIZE];
   copyArr(arr, data->arr, PACKET_SIZE);
   int seeds[PACKET_SIZE];
   copyArr(seeds, data->seeds, PACKET_SIZE);
   for (int i=0; i<PACKET_SIZE; i++) {
-    srand(seeds[i]);
     read(server_socket, data, sizeof(struct packet));
     if (type==-1) {
       close(server_socket);
       exit(0);
     }
-    bogoSort(arr, PACKET_SIZE, rand());
+    bogoSort(arr, PACKET_SIZE, seeds[i], copy);
+    copyArr(data->arr, copy, PACKET_SIZE);
+    data->type = PACKET_RESULT;
+    write(server_socket, data, sizeof(struct packet));
   }
 }
 
 int subserver_logic(int client_socket) {
+  // struct packet *data = malloc(sizeof(struct packet));
+  // int arr[PACKET_SIZE];
+  // int seeds[PACKET_SEEDS];
+  // read(client_socket, data, sizeof(struct packet));
+  // arrCopy(arr, data->arr, PACKET_SIZE);
 
+  // for (int i=0; i<PACKET_SIZE; i++) {
+  //   for (int j=0; j<arr[i]; j++) {
+  //     printf("color");
+  //   }
+  //   printf("color_reset\n");
+  // }
 }
 
 int server_tcp_handshake(int listen_socket) {
