@@ -6,13 +6,19 @@ void copyArr(int dest[], int copying[], int size) {
   }
 }
 
+void removeIndex(int arr[], int size, int index) {
+  for (int i=index; i<size; i++) {
+    arr[i] = arr[i+1];
+  }
+}
+
 void bogoSort(int arr[], int size, int random, int copy[]) {
   srand(random);
   copyArr(copy, arr, size);
   for (int i=0; i<size; i++) {
-    int x = rand();
-    int temp = copy[x%size];
-    copy[x%size] = copy[i];
+    int x = rand()%size;
+    int temp = copy[x];
+    copy[x] = copy[i];
     copy[i] = temp;
   }
 }
@@ -104,48 +110,45 @@ int clientLogic(int server_socket) {
   err(bytes, "Server error");
   int type = data->type;
   int arr[PACKET_SIZE];
+  int copy[PACKET_SIZE];
   copyArr(arr, data->arr, PACKET_SIZE);
   int seeds[PACKET_SEEDS];
   copyArr(seeds, data->seeds, PACKET_SIZE);
   for (int i=0; i<PACKET_SIZE; i++) {
+<<<<<<< HEAD
     int copy[PACKET_SIZE];
+=======
+>>>>>>> IsraelsBranch
     read(server_socket, data, sizeof(struct packet));
     if (type==-1) {
       close(server_socket);
       exit(0);
     }
     bogoSort(arr, PACKET_SIZE, seeds[i], copy);
+<<<<<<< HEAD
     data->type = PACKET_RESULT;
     copyArr(data->arr, copy, PACKET_SIZE);
+=======
+    copyArr(data->arr, copy, PACKET_SIZE);
+    data->type = PACKET_RESULT;
+>>>>>>> IsraelsBranch
     write(server_socket, data, sizeof(struct packet));
   }
 }
 
 int subserver_logic(int client_socket) {
+  struct packet *data = malloc(sizeof(struct packet));
+  int arr[PACKET_SIZE];
+  int seeds[PACKET_SEEDS];
+  read(client_socket, data, sizeof(struct packet));
+  copyArr(arr, data->arr, PACKET_SIZE);
 
-  /* 
-    as for how the server should display the data, I'm imagining the server should
-    just show one client for now, and we could use print commands to display how big
-    each int is, going to add base code here
-  */
-
- struct packet *data = malloc(sizeof(struct packet));
-
- int bytes = read(client_socket, data, sizeof(struct packet));
- err(bytes, "client error");
-
- int arr[PACKET_SIZE];
- copyArr(arr, data->arr, PACKET_SIZE);
-
- for (int i=0; i<PACKET_SIZE; i++) {
-  
-  for (int j=0; j<arr[i]; j++) {
-    printf("\033[%dm;%dm>", (i%8)+30, (arr[i]%8)+40);
+  for (int i=0; i<PACKET_SIZE; i++) {
+    for (int j=0; j<arr[i]; j++) {
+      printf("\e[0;%d>", (i%8)+30);
+    }
+    printf("\e[40m\n");
   }
-  printf("\033[0m\n");
-
- }
-
 }
 
 int server_tcp_handshake(int listen_socket){

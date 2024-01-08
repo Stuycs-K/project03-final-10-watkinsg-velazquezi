@@ -29,5 +29,5 @@ Updated the network file with methods in order to make sure it compiles and adde
 Worked on the variables the client uses to recieve the data from the server, and starting to work on how to make the seeds work with bogosort
 Finished BogoSort, added send feature to client, added to the server, included color
 
-### 2024-01-08 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-08 - Completed Bogo, working on server visuals
+The BogoSort now works randomly based off of the seed you give it, and the server now has the method made to show visuals once it's ready to show off it's clients. Has different colors to help see the difference
