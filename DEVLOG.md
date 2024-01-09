@@ -12,8 +12,9 @@ Wrapped up work on the proposal and began working on a basic server
 Worked on figuring out how the client and server should communicate, and ended up with a `struct packet` in `networking.h`.
 Spent the rest of the time figuring out `select()` and how to use it in the server to manage all the clients without forking.
 
-### 2024-01-08 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-08 - Nearly-functional select() based server
+Spent the day working in server.c, making the server be able to manage information coming from multiple sources.
+Most of the networking is done, except for array add/remove for multiple clients. Needs testing.
 
 ### 2024-01-09 - Brief description
 Expanded description including how much time was spent on task.
