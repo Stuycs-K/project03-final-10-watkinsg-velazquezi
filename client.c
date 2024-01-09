@@ -5,7 +5,7 @@ int main(int argc, char *argv[] ) {
   if(argc>1){
     IP=argv[1];
   }
-  printf("%s\n", IP);
+  printf("Connected to: %s\n", IP);
   int server_socket = client_tcp_handshake(IP);
   printf("client connected.\n");
   clientLogic(server_socket);

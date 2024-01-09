@@ -12,6 +12,15 @@ void removeIndex(int arr[], int size, int index) {
   }
 }
 
+void appendArr(int arr[], int newData) {
+  for (int i=0; i<MAX_CLIENTS; i++) {
+    if (!arr[i]) {
+      arr[i]=newData;
+      i += MAX_CLIENTS;
+    }
+  }
+}
+
 void bogoSort(int arr[], int size, int random, int copy[]) {
   srand(random);
   copyArr(copy, arr, size);
@@ -134,7 +143,6 @@ int clientLogic(int server_socket) {
 
   int arr[PACKET_SIZE];
   int copy[PACKET_SIZE];
-  
   int seeds[PACKET_SEEDS];
   
 
@@ -146,6 +154,8 @@ int clientLogic(int server_socket) {
 
     if (type==PACKET_REQUEST) {
       for (int i=0; i<PACKET_SEEDS; i++) {
+
+        // allow for stop/kill while doing bogosorts (Stretch goal)
         bogoSort(arr, PACKET_SIZE, seeds[i], copy);
 
         data->type = PACKET_RESULT;
@@ -153,6 +163,7 @@ int clientLogic(int server_socket) {
 
         write(server_socket, data, sizeof(struct packet));
         printf("Client has sent back a possible solution");
+        sleep(3);
       }
     }
     else if (type==PACKET_KILL) {
@@ -160,6 +171,10 @@ int clientLogic(int server_socket) {
       exit(0);
     }
   }
+}
+
+void printData() {
+  
 }
 
 int subserver_logic(int client_socket) {
