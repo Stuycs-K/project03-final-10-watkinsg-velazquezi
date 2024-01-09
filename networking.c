@@ -47,6 +47,29 @@ int ran(int size) {
   return number;
 }
 
+int ranPos(int size) {
+  int r_file = open("/dev/random", O_RDONLY , 0);
+  int buff[size];
+  size = read(r_file, buff, size);
+  if(size == -1)err();
+  int number = 0;
+  int increase = 0;
+  int index = 1;
+  for (int i=1; i<=size; i++) {
+    number+=buff[i-1]<<increase;
+    if (increase==0) {
+      increase++;
+    }
+    increase<=2;
+    index*=2;
+  }
+  number %= index;
+  if (number<0) {
+    number*=-1;
+  }
+  return number;
+}
+
 int client_tcp_handshake(char * server_address) {
 
   struct addrinfo * hints, * results;
