@@ -12,6 +12,7 @@
 #include <netdb.h>
 #include <sys/select.h>
 
+#define PACKET_KILL -2
 #define PACKET_STOP -1
 #define PACKET_REQUEST 0
 #define PACKET_RESULT 1

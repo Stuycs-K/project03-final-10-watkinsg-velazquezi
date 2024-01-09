@@ -42,7 +42,7 @@ int main(int argc, char *argv[] ) {
     for (int i = 0; i < 10; i++) {
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
-        if (/* INSERT CONDITION FOR DISCONNECT */) {
+        if (1/* INSERT CONDITION FOR DISCONNECT */) {
           removeIndex(cli_socks, 10, i);
         } else {
           subserver_logic(cli_socks[i]);
