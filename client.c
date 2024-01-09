@@ -1,7 +1,7 @@
 #include "networking.h"
 
 int main(int argc, char *argv[] ) {
-  char* IP = "Null";
+  char* IP = "127.0.0.1";
   if(argc>1){
     IP=argv[1];
   }

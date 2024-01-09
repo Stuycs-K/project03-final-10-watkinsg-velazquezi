@@ -85,12 +85,7 @@ int client_tcp_handshake(char * server_address) {
   hints = calloc(1,sizeof(struct addrinfo));
   hints->ai_family = AF_INET;
   hints->ai_socktype = SOCK_STREAM; //TCP socket
-  if (!strcmp(server_address, "Null")) {
-    getaddrinfo(NULL, PORT, hints, &results);
-  }
-  else {
-    getaddrinfo(server_address, PORT, hints, &results);
-  }
+  getaddrinfo(server_address, PORT, hints, &results);
     //Server sets node to NULL
 
   //getaddrinfo
@@ -174,7 +169,7 @@ int clientLogic(int server_socket) {
 }
 
 void printData() {
-  
+
 }
 
 int subserver_logic(int client_socket) {

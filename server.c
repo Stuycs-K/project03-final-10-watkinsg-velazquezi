@@ -15,21 +15,32 @@ int main(int argc, char *argv[] ) {
   FD_SET(STDIN_FILENO, &read_fds);
   FD_SET(listen_socket, &read_fds);
 
-  int started = 0; // 0 = false, 1 = true
+  int started = -1; // 0 = false, 1 = true
 
   while (1) {
+    char input[100];
+    if (started==-1) {
+      printf("Press enter to begin\n");
+      read(STDIN_FILENO, input, 100);
+      input[0];
+      started = 0;
+    }
+    
     select(listen_socket+1, &read_fds, NULL, NULL, NULL);
 
+    
+
     // if not started, check for new clients
-    if (started == 0 && FD_ISSET(listen_socket, &read_fds)) {
+    if (started == 1 && FD_ISSET(listen_socket, &read_fds)) {
       int client_socket = server_tcp_handshake(listen_socket);
       printf("client connected.\n");
       FD_SET(client_socket, &read_fds);
       // add client socket to array (first open spot? find it?)
     }
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
-      char input[100];
-      printf("Please input something: ");
+      
+      started = 0;
+      fflush(stdout);
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
       // handle commands such as:
