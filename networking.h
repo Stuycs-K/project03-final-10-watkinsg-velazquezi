@@ -19,6 +19,8 @@
 
 #define PACKET_SIZE 10
 #define PACKET_SEEDS 10
+#define MAX_CLIENTS 10
+
 
 struct packet {
     int type;
