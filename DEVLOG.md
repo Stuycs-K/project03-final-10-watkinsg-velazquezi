@@ -43,6 +43,7 @@ Finished BogoSort, added send feature to client, added to the server, included c
 
 ### 2024-01-08 - Completed Bogo, working on server visuals
 The BogoSort now works randomly based off of the seed you give it, and the server now has the method made to show visuals once it's ready to show off it's clients. Has different colors to help see the difference
+Added a better random method, print statement to cknfirm if client could was working, and removed unnecessary code. Reading server now as it's what I have to transition to
 
 ### 2024-01-09 - Brief description
 Expanded description including how much time was spent on task.
