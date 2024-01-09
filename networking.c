@@ -147,13 +147,13 @@ int clientLogic(int server_socket) {
     data->type = PACKET_RESULT;
     copyArr(data->arr, copy, PACKET_SIZE);
     write(server_socket, data, sizeof(struct packet));
+    printf("Client has sent back a possible solution");
   }
 }
 
 int subserver_logic(int client_socket) {
   struct packet *data = malloc(sizeof(struct packet));
   int arr[PACKET_SIZE];
-  int seeds[PACKET_SEEDS];
   read(client_socket, data, sizeof(struct packet));
   copyArr(arr, data->arr, PACKET_SIZE);
 
