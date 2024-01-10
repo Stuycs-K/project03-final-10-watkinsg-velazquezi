@@ -31,11 +31,13 @@ int main(int argc, char *argv[] ) {
   FD_SET(STDIN_FILENO, &read_fds);
   FD_SET(listen_socket, &read_fds);
 
-  int started = -1; // 0 = false, 1 = true
+  int started = 0; // 0 = false, 1 = true
 
   while (1) {
     struct timeval timeout = { 1, 0 };
-    select(listen_socket+1, &read_fds, NULL, NULL, NULL);
+    int highestClient = findHighest(cli_socks, MAX_CLIENTS);
+    int highestDescriptor = highestClient > listen_socket ? highestClient : listen_socket;
+    select(highestDescriptor+1, &read_fds, NULL, NULL, 0);
 
     // if not started, check for new clients
     if (started == 0 && FD_ISSET(listen_socket, &read_fds)) {
@@ -43,7 +45,7 @@ int main(int argc, char *argv[] ) {
       printf("client connected.\n");
       FD_SET(client_socket, &read_fds);
       printf("past client fdset\n");
-      // add client socket to array (first open spot? find it?)
+      appendArr(cli_socks, client_socket);
     }
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       printf("stdin is set!!\n");
@@ -86,5 +88,6 @@ int main(int argc, char *argv[] ) {
 
       // ???
       // figure out how to continually listen to clients while also having an initial 'lobby' before sending task packets out
+    sleep(1);
   }
 }
