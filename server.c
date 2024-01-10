@@ -1,9 +1,24 @@
 #include "networking.h"
 // TODO: start in a 'lobby' mode that doesn't send/recieve data to clients - only connects
 // when reading from stdin check if the command is 'start', if so, set a bool to true and send tasks to client (then start reading)
+
+static int sign = 0;
+
+static void sighandler( int signo ) {
+    
+    if (signo==SIGINT) {
+      sign = 1;
+    }
+    else if (signo==SIGQUIT) {
+      sign = -1;
+    }
+}
+
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup();
 
+  signal(SIGQUIT, &sighandler);
+  
   socklen_t sock_size;
   struct sockaddr_storage client_address;
   sock_size = sizeof(client_address);
@@ -15,7 +30,7 @@ int main(int argc, char *argv[] ) {
   FD_SET(STDIN_FILENO, &read_fds);
   FD_SET(listen_socket, &read_fds);
 
-  int started = 0; // 0 = false, 1 = true
+  int started = -1; // 0 = false, 1 = true
 
   while (1) {
     struct timeval timeout = { 1, 0 };
@@ -37,20 +52,36 @@ int main(int argc, char *argv[] ) {
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
-      // stop - stops the project, sends stop packet to clients
+      // stop - stops the project, sends stop p staacket to clients
       // kill - ends every client process and stops the server
     }
     // for every client descriptor stored, check if it has data to read
     for (int i = 0; i < 10; i++) {
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
-        if (1/* INSERT CONDITION FOR DISCONNECT */) {
+        if (sign==-1 || 1/* INSERT CONDITION FOR DISCONNECT */) {
           removeIndex(cli_socks, 10, i);
-        } else {
+
+          /*
+            Whatever the send method is goes here to send packets to KILL
+          */
+
+          /* Quick question, doesn't this run the risk of going from index 2, to index 4 (Skipping indexx 3) if index 2 is removed?*/
+
+        } 
+        else if (sign==1) {
+          /*
+            Whatever the send method is goes here to send packets to STOP
+          */
+        }
+        else {
           subserver_logic(cli_socks[i]);
         }
       }
     }   
+    if (sign==-1) {
+      exit(0);
+    }
 
       // ???
       // figure out how to continually listen to clients while also having an initial 'lobby' before sending task packets out
