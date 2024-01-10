@@ -30,7 +30,7 @@ int findHighest(int arr[], int size) {
       index = i;
     }
   }
-  return index;
+  return biggest;
 }
 
 void bogoSort(int arr[], int size, int random, int copy[]) {
