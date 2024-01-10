@@ -21,6 +21,18 @@ void appendArr(int arr[], int newData) {
   }
 }
 
+int findHighest(int arr[], int size) {
+  int biggest = -1;
+  int index = -1;
+  for (int i=0; i<size; i++) {
+    if (arr[i]>biggest) {
+      biggest = arr[i];
+      index = i;
+    }
+  }
+  return index;
+}
+
 void bogoSort(int arr[], int size, int random, int copy[]) {
   srand(random);
   copyArr(copy, arr, size);
@@ -91,6 +103,7 @@ int client_tcp_handshake(char * server_address) {
   //getaddrinfo
   
   int sd = socket(results->ai_family, results->ai_socktype, 0);
+  err(sd, "Failed");
   //create the socket
   connect(sd, results->ai_addr, results->ai_addrlen);
   //connect to the server
