@@ -37,7 +37,8 @@ int main(int argc, char *argv[] ) {
     struct timeval timeout = { 1, 0 };
     int highestClient = findHighest(cli_socks, MAX_CLIENTS);
     int highestDescriptor = highestClient > listen_socket ? highestClient : listen_socket;
-    select(highestDescriptor+1, &read_fds, NULL, NULL, 0);
+    int bytes = select(highestDescriptor+1, &read_fds, NULL, NULL, 0);
+    printf("%d\n", bytes);
 
     // if not started, check for new clients
     if (started == 0 && FD_ISSET(listen_socket, &read_fds)) {
