@@ -7,9 +7,10 @@ static int sign = 0;
 static void sighandler( int signo ) {
     
     if (signo==SIGINT) {
+      sign = 1;
     }
     else if (signo==SIGQUIT) {
-        sign = -1;
+      sign = -1;
     }
 }
 
@@ -70,7 +71,13 @@ int main(int argc, char *argv[] ) {
 
           /* Quick question, doesn't this run the risk of going from index 2, to index 4 (Skipping indexx 3) if index 2 is removed?*/
 
-        } else {
+        } 
+        else if (sign==1) {
+          /*
+          Whatever the send method is goes here
+          */
+        }
+        else {
           subserver_logic(cli_socks[i]);
         }
       }
