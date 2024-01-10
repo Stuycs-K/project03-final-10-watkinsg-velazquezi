@@ -65,6 +65,7 @@ int main(int argc, char *argv[] ) {
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
         if (sign==-1 || 1/* INSERT CONDITION FOR DISCONNECT */) {
+          //nit sign -1
           removeIndex(cli_socks, 10, i);
           i--;
           SIZEOF--;
