@@ -1,4 +1,4 @@
-#include "networking.h"
+#include "util.h"
 // TODO: start in a 'lobby' mode that doesn't send/recieve data to clients - only connects
 // when reading from stdin check if the command is 'start', if so, set a bool to true and send tasks to client (then start reading)
 
@@ -17,8 +17,8 @@ static void sighandler( int signo ) {
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup();
 
-  signal(SIGQUIT, &sighandler);
-  signal(SIGINT, &sighandler);
+  // signal(SIGQUIT, &sighandler);
+  // signal(SIGINT, &sighandler);
   
   socklen_t sock_size;
   struct sockaddr_storage client_address;
