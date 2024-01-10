@@ -91,6 +91,7 @@ int client_tcp_handshake(char * server_address) {
   //getaddrinfo
   
   int sd = socket(results->ai_family, results->ai_socktype, 0);
+  err(sd, "Failed");
   //create the socket
   connect(sd, results->ai_addr, results->ai_addrlen);
   //connect to the server
