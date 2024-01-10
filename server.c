@@ -1,9 +1,23 @@
 #include "networking.h"
 // TODO: start in a 'lobby' mode that doesn't send/recieve data to clients - only connects
 // when reading from stdin check if the command is 'start', if so, set a bool to true and send tasks to client (then start reading)
+
+static int sign = 0;
+
+static void sighandler( int signo ) {
+    
+    if (signo==SIGINT) {
+    }
+    else if (signo==SIGQUIT) {
+        sign = -1;
+    }
+}
+
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup();
 
+  signal(SIGQUIT, &sighandler);
+  
   socklen_t sock_size;
   struct sockaddr_storage client_address;
   sock_size = sizeof(client_address);
@@ -28,8 +42,6 @@ int main(int argc, char *argv[] ) {
     
     select(listen_socket+1, &read_fds, NULL, NULL, NULL);
 
-    
-
     // if not started, check for new clients
     if (started == 1 && FD_ISSET(listen_socket, &read_fds)) {
       int client_socket = server_tcp_handshake(listen_socket);
@@ -53,12 +65,18 @@ int main(int argc, char *argv[] ) {
     for (int i = 0; i < 10; i++) {
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
-        if (1/* INSERT CONDITION FOR DISCONNECT */) {
+        if (sign==-1 || 1/* INSERT CONDITION FOR DISCONNECT */) {
           removeIndex(cli_socks, 10, i);
+
+          /* Quick question, doesn't this run the risk of going from index 2, to index 4 (Skipping indexx 3) if index 2 is removed?*/
+
         } else {
           subserver_logic(cli_socks[i]);
         }
       }
+    }
+    if (sign==-1) {
+      exit(0);
     }
 
     
