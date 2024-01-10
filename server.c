@@ -57,17 +57,17 @@ int main(int argc, char *argv[] ) {
       // kill - ends every client process and stops the server
     }
     // for every client descriptor stored, check if it has data to read
-    for (int i = 0; i < 10; i++) {
+    int SIZEOF = 10;
+    for (int i = 0; i < SIZEOF; i++) {
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
         if (sign==-1 || 1/* INSERT CONDITION FOR DISCONNECT */) {
           removeIndex(cli_socks, 10, i);
-
+          i--;
+          SIZEOF--;
           /*
             Whatever the send method is goes here to send packets to KILL
           */
-
-          /* Quick question, doesn't this run the risk of going from index 2, to index 4 (Skipping indexx 3) if index 2 is removed?*/
 
         } 
         else if (sign==1) {
