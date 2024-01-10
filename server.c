@@ -17,8 +17,8 @@ static void sighandler( int signo ) {
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup();
 
-  // signal(SIGQUIT, &sighandler);
-  // signal(SIGINT, &sighandler);
+  signal(SIGQUIT, &sighandler);
+  signal(SIGINT, &sighandler);
   
   socklen_t sock_size;
   struct sockaddr_storage client_address;
@@ -32,6 +32,7 @@ int main(int argc, char *argv[] ) {
   int started = 0; // 0 = false, 1 = true
 
   while (1) {
+    printf("Please send a message: \n");
     struct timeval timeout = { 1, 0 };
     int highestClient = findHighest(cli_socks, MAX_CLIENTS);
     int highestDescriptor = highestClient > listen_socket ? highestClient : listen_socket;
@@ -48,10 +49,10 @@ int main(int argc, char *argv[] ) {
       appendArr(cli_socks, client_socket);
     }
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
-      printf("stdin is set!!\n");
       char input[100];
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
+      printf("Please send a new message: \n");
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
@@ -76,6 +77,7 @@ int main(int argc, char *argv[] ) {
           /*
             Whatever the send method is goes here to send packets to STOP
           */
+          
         }
         else {
           // subserver_logic(cli_socks[i]);
