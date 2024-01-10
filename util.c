@@ -23,11 +23,9 @@ void appendArr(int arr[], int newData) {
 
 int findHighest(int arr[], int size) {
   int biggest = -1;
-  int index = -1;
   for (int i=0; i<size; i++) {
     if (arr[i]>biggest) {
       biggest = arr[i];
-      index = i;
     }
   }
   return biggest;
