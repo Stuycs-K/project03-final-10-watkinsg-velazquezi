@@ -51,8 +51,8 @@ Added a better random method, print statement to cknfirm if client could was wor
 In class I finished up the client, making it handle the Server's output slightly differently and more efficiently. Added a bandaid solution for a bug
 At home I added signal handling, including SIGINT and SIGQUIT which will be very useful as inputs for our presentation
 
-### 2024-01-10 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-10 - Fixed Server, added new util methods
+Helped fix the select issue where the file descriptors were being cleared after every slect call. Added a new method to find the biggest value in an array given the size of the array
 
 ### 2024-01-11 - Brief description
 Expanded description including how much time was spent on task.
