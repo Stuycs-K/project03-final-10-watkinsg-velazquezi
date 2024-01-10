@@ -69,12 +69,16 @@ int main(int argc, char *argv[] ) {
         if (sign==-1 || 1/* INSERT CONDITION FOR DISCONNECT */) {
           removeIndex(cli_socks, 10, i);
 
+          /*
+            Whatever the send method is goes here to send packets to KILL
+          */
+
           /* Quick question, doesn't this run the risk of going from index 2, to index 4 (Skipping indexx 3) if index 2 is removed?*/
 
         } 
         else if (sign==1) {
           /*
-          Whatever the send method is goes here
+            Whatever the send method is goes here to send packets to STOP
           */
         }
         else {
