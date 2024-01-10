@@ -20,8 +20,8 @@ Most of the networking is done, except for array add/remove for multiple clients
 It isn't able to read from stdin if you don't write to it before the first client connects - spent most of the period trying to figure that out.
 Israel started working on a band-aid fix (which I plan to finish).
 
-### 2024-01-10 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-10 - THE SERVER WORKS!!!
+Spent the day debugging the server with Israel. Turns out that select() removes file descriptors in the fd_set that don't have data to read, even though this isn't necessary and that it doesn't mess with `FD_ISSET`. :/
 
 ### 2024-01-11 - Brief description
 Expanded description including how much time was spent on task.
