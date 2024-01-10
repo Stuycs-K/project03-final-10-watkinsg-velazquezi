@@ -18,6 +18,7 @@ int main(int argc, char *argv[] ) {
   int started = 0; // 0 = false, 1 = true
 
   while (1) {
+    struct timeval timeout = { 1, 0 };
     select(listen_socket+1, &read_fds, NULL, NULL, NULL);
 
     // if not started, check for new clients
@@ -25,11 +26,12 @@ int main(int argc, char *argv[] ) {
       int client_socket = server_tcp_handshake(listen_socket);
       printf("client connected.\n");
       FD_SET(client_socket, &read_fds);
+      printf("past client fdset\n");
       // add client socket to array (first open spot? find it?)
     }
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
+      printf("stdin is set!!\n");
       char input[100];
-      printf("Please input something: ");
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
       // handle commands such as:
@@ -48,9 +50,7 @@ int main(int argc, char *argv[] ) {
           subserver_logic(cli_socks[i]);
         }
       }
-    }
-
-    
+    }   
 
       // ???
       // figure out how to continually listen to clients while also having an initial 'lobby' before sending task packets out
