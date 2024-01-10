@@ -42,5 +42,6 @@ int server_tcp_handshake(int listen_socket);
 int clientLogic(int server_socket);
 int subserver_logic(int client_socket);
 void removeIndex(int arr[], int size, int index);
+void appendArr(int arr[], int newData);
 int findHighest(int arr[], int size);
 #endif
