@@ -34,33 +34,26 @@ int main(int argc, char *argv[] ) {
   int started = -1; // 0 = false, 1 = true
 
   while (1) {
-    char input[100];
-    if (started==-1) {
-      printf("Press enter to begin\n");
-      read(STDIN_FILENO, input, 100);
-      input[0];
-      started = 0;
-    }
-    
+    struct timeval timeout = { 1, 0 };
     select(listen_socket+1, &read_fds, NULL, NULL, NULL);
 
     // if not started, check for new clients
-    if (started == 1 && FD_ISSET(listen_socket, &read_fds)) {
+    if (started == 0 && FD_ISSET(listen_socket, &read_fds)) {
       int client_socket = server_tcp_handshake(listen_socket);
       printf("client connected.\n");
       FD_SET(client_socket, &read_fds);
+      printf("past client fdset\n");
       // add client socket to array (first open spot? find it?)
     }
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
-      
-      started = 0;
-      fflush(stdout);
+      printf("stdin is set!!\n");
+      char input[100];
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
-      // stop - stops the project, sends stop packet to clients
+      // stop - stops the project, sends stop p staacket to clients
       // kill - ends every client process and stops the server
     }
     // for every client descriptor stored, check if it has data to read
@@ -86,12 +79,10 @@ int main(int argc, char *argv[] ) {
           subserver_logic(cli_socks[i]);
         }
       }
-    }
+    }   
     if (sign==-1) {
       exit(0);
     }
-
-    
 
       // ???
       // figure out how to continually listen to clients while also having an initial 'lobby' before sending task packets out

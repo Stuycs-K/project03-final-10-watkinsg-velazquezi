@@ -16,8 +16,9 @@ Spent the rest of the time figuring out `select()` and how to use it in the serv
 Spent the day working in server.c, making the server be able to manage information coming from multiple sources.
 Most of the networking is done, except for array add/remove for multiple clients. Needs testing.
 
-### 2024-01-09 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-09 - Debugging server
+It isn't able to read from stdin if you don't write to it before the first client connects - spent most of the period trying to figure that out.
+Israel started working on a band-aid fix (which I plan to finish).
 
 ### 2024-01-10 - Brief description
 Expanded description including how much time was spent on task.
