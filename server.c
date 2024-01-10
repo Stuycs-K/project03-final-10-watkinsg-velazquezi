@@ -9,7 +9,7 @@ static void sighandler( int signo ) {
     if (signo==SIGINT) {
       sign = 1;
     }
-    else if (signo==SIGQUIT) {
+    if (signo==SIGQUIT) {
       sign = -1;
     }
 }
