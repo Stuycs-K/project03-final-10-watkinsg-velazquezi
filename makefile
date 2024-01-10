@@ -7,20 +7,20 @@ Server: server
 Client: client
 	@./client $(ARGS)
 
-client: client.o networking.o
-	@gcc -o client client.o networking.o
+client: client.o util.o
+	@gcc -o client client.o util.o
 
-server: server.o networking.o
-	@gcc -o server server.o networking.o
+server: server.o util.o
+	@gcc -o server server.o util.o
 
-client.o: client.c networking.h
+client.o: client.c util.h
 	@gcc -c client.c
 
-server.o: server.c networking.h
+server.o: server.c util.h
 	@gcc -c server.c
 
-networking.o: networking.c
-	@gcc -c networking.c
+util.o: util.c
+	@gcc -c util.c
 
 clean:
 	@rm *.o client server -f
