@@ -18,6 +18,7 @@ int main(int argc, char *argv[] ) {
   int listen_socket = server_setup();
 
   signal(SIGQUIT, &sighandler);
+  signal(SIGINT, &sighandler);
   
   socklen_t sock_size;
   struct sockaddr_storage client_address;
