@@ -70,9 +70,7 @@ int main(int argc, char *argv[] ) {
           if (!SIZEOF) {
             exit(0);
           }
-        }
-        
-        else if (1/* INSERT CONDITION FOR DISCONNECT */) {
+        } else if (1/* INSERT CONDITION FOR DISCONNECT */) {
           //nit sign -1
           
           
@@ -90,23 +88,20 @@ int main(int argc, char *argv[] ) {
             Whatever the send method is goes here to send packets to KILL
           */
 
-        } 
-        else if (sign==1) {
+        } else if (sign==1) {
           /*
             Whatever the send method is goes here to send packets to STOP
           */
           
-        }
-        else {
+        } else {
           // subserver_logic(cli_socks[i]);
         }
       }
     }   
+
     if (sign==-1) {
       exit(0);
     }
 
-      // ???
-      // figure out how to continually listen to clients while also having an initial 'lobby' before sending task packets out
   }
 }
