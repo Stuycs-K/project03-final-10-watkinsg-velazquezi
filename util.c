@@ -180,9 +180,14 @@ int clientLogic(int server_socket) {
           copyArr(data->arr, copy, PACKET_SIZE);
 
           read(server_socket, data, sizeof(struct packet));
-          write(server_socket, data, sizeof(struct packet));
-          printf("Client has sent back a possible solution");
-          sleep(3);
+          if (!data->type) {
+            write(server_socket, data, sizeof(struct packet));
+            printf("Client has sent back a possible solution");
+            sleep(3);
+          }
+          else if (data->type==-1) {
+            i+=PACKET_SEEDS;
+          }
         }
       }
     }
@@ -200,6 +205,8 @@ void printData() {
 int subserver_logic(int client_socket) {
   struct packet *data = malloc(sizeof(struct packet));
   int arr[PACKET_SIZE];
+  data->type = PACKET_REQUEST;
+  write(client_socket, data, sizeof(struct packet));
   read(client_socket, data, sizeof(struct packet));
   copyArr(arr, data->arr, PACKET_SIZE);
 
