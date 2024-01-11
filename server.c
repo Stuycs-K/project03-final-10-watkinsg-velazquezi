@@ -72,7 +72,7 @@ int main(int argc, char *argv[] ) {
       char input[100];
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
-      printf("Please send a new message: ");
+      printf("Please send a new message: \n");
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
