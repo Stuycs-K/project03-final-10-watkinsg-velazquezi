@@ -55,6 +55,37 @@ int main(int argc, char *argv[] ) {
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
+      if (strcmp(input, "start\n")==0) {
+        started = 1;
+        int numclients = 0;
+        for (int i = 0; i < MAX_CLIENTS; i++) {
+          if (cli_socks[i] != 0) {
+            numclients++;
+          }
+        }
+        int seedsperclient = TOTAL_SEEDS / numclients;
+        int extra = TOTAL_SEEDS % numclients;
+        for (int i = 0; i < numclients; i++) {
+          struct packet *data = malloc(sizeof(struct packet));
+          data->type = PACKET_REQUEST;
+          int seeds[PACKET_SEEDS] = {0};
+          for (int j = seedsperclient * i + extra; j < seedsperclient * (i + 1) + extra; j++) {
+            appendArr(seeds, j);
+          }
+          copyArr(data->seeds, seeds, PACKET_SEEDS);
+          write(cli_socks[i], data, sizeof(struct packet));
+          // TODO: handle extra seeds
+          // if (i = 0) {
+          //   j -= extra;
+          //   for (int j = 0; j < extra; j++) {
+          //     appendArr()
+          //   }
+          // }
+          printf("Sent tasks to clients!\n");
+
+        }
+
+      }
       // stop - stops the project, sends stop p staacket to clients
       // kill - ends every client process and stops the server
     }
@@ -87,7 +118,7 @@ int main(int argc, char *argv[] ) {
           int bytes = write(cli_socks[i], data, sizeof(struct packet));
           err(bytes, "Server error");
         } else {
-          // subserver_logic(cli_socks[i]);
+          subserver_logic(cli_socks[i]);
         }
       }
     }   
