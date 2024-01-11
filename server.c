@@ -108,11 +108,12 @@ int main(int argc, char *argv[] ) {
 
       }
       // stop - stops the project, sends stop p staacket to clients
-      // kill - ends every client process and stops the server
+      // kill - ends every client process and stops the \server
     }
     // for every client descriptor stored, check if it has data to read
     int SIZEOF = 10;
     for (int i = 0; i < SIZEOF; i++) {
+                printf("Hi\n");
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
 
@@ -127,6 +128,7 @@ int main(int argc, char *argv[] ) {
             exit(0);
           }
         } else if (!bytes) {
+          printf("bytes\n");
           close(cli_socks[i]);
           removeIndex(cli_socks, 10, i);
 

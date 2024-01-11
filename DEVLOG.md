@@ -56,7 +56,7 @@ Helped fix the select issue where the file descriptors were being cleared after 
 The server now quits successfully on ^C, while closing the clients. discovered the remove method needed to tell clients to close
 
 ### 2024-01-11 - Aligned the Client and Server
-Expanded description including how much time was spent on task.
+The Client and Server now write and read the same number of times. Server now handles stopping clients midway through their bogosorting. Seemed to have ecountered an issue with client only going through the loop once
 
 ### 2024-01-12 - Brief description
 Expanded description including how much time was spent on task.
