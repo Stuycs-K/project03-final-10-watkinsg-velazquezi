@@ -53,6 +53,7 @@ At home I added signal handling, including SIGINT and SIGQUIT which will be very
 
 ### 2024-01-10 - Fixed Server, added new util methods
 Helped fix the select issue where the file descriptors were being cleared after every slect call. Added a new method to find the biggest value in an array given the size of the array
+The server now quits successfully on ^C, while closing the clients. discovered the remove method needed to tell clients to close
 
 ### 2024-01-11 - Brief description
 Expanded description including how much time was spent on task.
