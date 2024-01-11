@@ -72,7 +72,7 @@ int main(int argc, char *argv[] ) {
       char input[100];
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
-      printf("Please send a new message: \n");
+      printf("Please send a new message: ");
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
@@ -113,7 +113,7 @@ int main(int argc, char *argv[] ) {
     // for every client descriptor stored, check if it has data to read
     int SIZEOF = 10;
     for (int i = 0; i < SIZEOF; i++) {
-                printf("Hi\n");
+      printf("Hi\n");
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
 
@@ -121,6 +121,7 @@ int main(int argc, char *argv[] ) {
         int bytes = read(cli_socks[i], data, sizeof(struct packet));
 
         if (sign==-1) {
+          printf("bytes\n");
           close(cli_socks[i]);
           i--;
           SIZEOF--;
