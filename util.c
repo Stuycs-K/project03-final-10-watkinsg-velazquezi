@@ -211,10 +211,12 @@ int subserver_logic(int client_socket) {
   copyArr(arr, data->arr, PACKET_SIZE);
 
   for (int i=0; i<PACKET_SIZE; i++) {
-    for (int j=0; j<arr[i]; j++) {
-      printf("\e[0;%d>", (i%8)+30);
+    if (arr[i]) {
+      for (int j=0; j<arr[i]; j++) {
+        printf("\e[0;%d>", (i%8)+30);
+      }
+      printf("\e[40m\n");
     }
-    printf("\e[40m\n");
   }
 }
 
