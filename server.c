@@ -75,8 +75,18 @@ int main(int argc, char *argv[] ) {
         
         else if (1/* INSERT CONDITION FOR DISCONNECT */) {
           //nit sign -1
-          removeIndex(cli_socks, 10, i);
+          
+          
+          struct packet *data = malloc(sizeof(struct packet));
+          data->type = -1;
+          int bytes = write(cli_socks[i], data, sizeof(struct packet));
+          err(bytes, "Server error");
+          
+          close(cli_socks[i]);
+          remove(cli_socks, 10, i)
+  
           i--;
+          SIZEOF--;
           /*
             Whatever the send method is goes here to send packets to KILL
           */
