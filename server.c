@@ -83,7 +83,7 @@ int main(int argc, char *argv[] ) {
           err(bytes, "Server error");
           
           close(cli_socks[i]);
-          remove(cli_socks, 10, i)
+          removeIndex(cli_socks, 10, i);
   
           i--;
           SIZEOF--;
