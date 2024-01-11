@@ -33,12 +33,11 @@ int main(int argc, char *argv[] ) {
 
   while (1) {
     printf("Please send a message: \n");
-    struct timeval timeout = { 1, 0 };
     int highestClient = findHighest(cli_socks, MAX_CLIENTS);
     int highestDescriptor = highestClient > listen_socket ? highestClient : listen_socket;
     FD_SET(STDIN_FILENO, &read_fds);
     FD_SET(listen_socket, &read_fds);
-    select(highestDescriptor+1, &read_fds, NULL, NULL, 0);
+    select(highestDescriptor+1, &read_fds, NULL, NULL, NULL);
 
     // if not started, check for new clients
     if (started == 0 && FD_ISSET(listen_socket, &read_fds)) {
@@ -105,6 +104,5 @@ int main(int argc, char *argv[] ) {
 
       // ???
       // figure out how to continually listen to clients while also having an initial 'lobby' before sending task packets out
-    sleep(1);
   }
 }
