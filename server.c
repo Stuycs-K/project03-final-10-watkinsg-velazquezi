@@ -63,6 +63,10 @@ int main(int argc, char *argv[] ) {
     for (int i = 0; i < SIZEOF; i++) {
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
+
+        struct packet *data = malloc(sizeof(struct packet));
+        int bytes = read(cli_socks[i], data, sizeof(struct packet));
+
         if (sign==-1) {
           close(cli_socks[i]);
           i--;
@@ -70,29 +74,18 @@ int main(int argc, char *argv[] ) {
           if (!SIZEOF) {
             exit(0);
           }
-        } else if (1/* INSERT CONDITION FOR DISCONNECT */) {
-          //nit sign -1
-          
-          
-          struct packet *data = malloc(sizeof(struct packet));
-          data->type = -1;
-          int bytes = write(cli_socks[i], data, sizeof(struct packet));
-          err(bytes, "Server error");
-          
+        } else if (!bytes) {
           close(cli_socks[i]);
           removeIndex(cli_socks, 10, i);
-  
+
           i--;
           SIZEOF--;
-          /*
-            Whatever the send method is goes here to send packets to KILL
-          */
-
-        } else if (sign==1) {
-          /*
-            Whatever the send method is goes here to send packets to STOP
-          */
           
+        } else if (sign==1) {
+          struct packet *data = malloc(sizeof(struct packet));
+          data->type = PACKET_STOP;
+          int bytes = write(cli_socks[i], data, sizeof(struct packet));
+          err(bytes, "Server error");
         } else {
           // subserver_logic(cli_socks[i]);
         }
@@ -101,6 +94,9 @@ int main(int argc, char *argv[] ) {
 
     if (sign==-1) {
       exit(0);
+    }
+    else if (sign==1) {
+      sign = 0;
     }
 
   }
