@@ -64,11 +64,19 @@ int main(int argc, char *argv[] ) {
     for (int i = 0; i < SIZEOF; i++) {
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
-        if (sign==-1 || 1/* INSERT CONDITION FOR DISCONNECT */) {
+        if (sign==-1) {
+          close(cli_socks[i]);
+          i--;
+          SIZEOF--;
+          if (!SIZEOF) {
+            exit(0);
+          }
+        }
+        
+        else if (1/* INSERT CONDITION FOR DISCONNECT */) {
           //nit sign -1
           removeIndex(cli_socks, 10, i);
           i--;
-          SIZEOF--;
           /*
             Whatever the send method is goes here to send packets to KILL
           */
