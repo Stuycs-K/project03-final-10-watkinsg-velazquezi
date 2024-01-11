@@ -51,7 +51,7 @@ int main(int argc, char *argv[] ) {
       char input[100];
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
-      printf("Please send a new message: \n");
+      printf("Please send a new message: ");
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
@@ -80,22 +80,16 @@ int main(int argc, char *argv[] ) {
 
           i--;
           SIZEOF--;
-          
         } else if (sign==1) {
-          struct packet *data = malloc(sizeof(struct packet));
           data->type = PACKET_STOP;
-          int bytes = write(cli_socks[i], data, sizeof(struct packet));
+          bytes = write(cli_socks[i], data, sizeof(struct packet));
           err(bytes, "Server error");
         } else {
           // subserver_logic(cli_socks[i]);
         }
       }
-    }   
-
-    if (sign==-1) {
-      exit(0);
     }
-    else if (sign==1) {
+    if (sign==1) {
       sign = 0;
     }
 
