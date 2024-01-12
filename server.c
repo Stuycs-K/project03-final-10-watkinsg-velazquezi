@@ -119,7 +119,7 @@ int main(int argc, char *argv[] ) {
     int SIZEOF = 10;
     for (int i = 0; i < SIZEOF; i++) {
       if (FD_ISSET(cli_socks[i], &read_fds) && cli_socks[i] != 0) {
-        printf("Client socket %i has data ready??\n");
+        printf("Client socket %d has data ready??\n", i);
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
         struct packet *data = malloc(sizeof(struct packet));
         int bytes;
