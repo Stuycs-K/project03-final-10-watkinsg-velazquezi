@@ -73,16 +73,20 @@ int main(int argc, char *argv[] ) {
           }
         }
         
-        else if (1/* INSERT CONDITION FOR DISCONNECT */) {
-          //nit sign -1
-          removeIndex(cli_socks, 10, i);
-          i--;
-          /*
-            Whatever the send method is goes here to send packets to KILL
-          */
+        // else if (1/* INSERT CONDITION FOR DISCONNECT */) {
 
-        } 
+        //   //nit sign -1
+          
+        //   /*
+        //     Whatever the send method is goes here to send packets to KILL
+        //   */
+         
+
+        // } 
         else if (sign==1) {
+
+          
+
           /*
             Whatever the send method is goes here to send packets to STOP
           */

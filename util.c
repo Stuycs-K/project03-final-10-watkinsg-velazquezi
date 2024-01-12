@@ -179,8 +179,14 @@ int clientLogic(int server_socket) {
   }
 }
 
-void printData() {
-
+void printData(int arr[]) {
+  for (int i=0; i<PACKET_SIZE; i++) {
+    int color = (i%8)+30
+    for (int j=0; j<arr[i]; j++) {
+      printf("\e[0;%d>", color);
+    }
+    printf("\e[40m\n");
+  }
 }
 
 int subserver_logic(int client_socket) {
@@ -188,13 +194,8 @@ int subserver_logic(int client_socket) {
   int arr[PACKET_SIZE];
   read(client_socket, data, sizeof(struct packet));
   copyArr(arr, data->arr, PACKET_SIZE);
-
-  for (int i=0; i<PACKET_SIZE; i++) {
-    for (int j=0; j<arr[i]; j++) {
-      printf("\e[0;%d>", (i%8)+30);
-    }
-    printf("\e[40m\n");
-  }
+  
+  printData(arr);
 }
 
 int server_tcp_handshake(int listen_socket){
