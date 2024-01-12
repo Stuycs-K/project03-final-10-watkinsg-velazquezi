@@ -123,14 +123,16 @@ int main(int argc, char *argv[] ) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
         struct packet *data = malloc(sizeof(struct packet));
         int bytes;
+        
         if (sign!=-1 && cli_socks[i]) {
           printf("about to read from cli sock\n");
           bytes = read(cli_socks[i], data, sizeof(struct packet));
           printf("made it out\n");
         }
-        
 
         if (sign==-1) {
+          data->type = PACKET_KILL;
+          write(cli_socks[i], data, sizeof(struct packet));
           close(cli_socks[i]);
           i--;
           SIZEOF--;

@@ -127,7 +127,7 @@ int server_setup() {
 	
   //this code should get around the address in use error
   int yes = 1;
-  int sockOpt =  setsockopt(clientd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
+  int sockOpt = setsockopt(clientd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
   err(sockOpt,"sockopt error");
 
   //bind the socket to address and port
@@ -189,12 +189,11 @@ int clientLogic(int server_socket) {
           else if (data->type==-1) {
             i+=PACKET_SEEDS;
           }
+          else if (data->type==-2) {
+            exit(0);
+          }
         }
       }
-    }
-    else if (type==PACKET_KILL) {
-      close(server_socket);
-      exit(0);
     }
   }
 }
