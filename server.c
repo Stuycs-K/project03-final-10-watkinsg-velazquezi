@@ -71,6 +71,7 @@ int main(int argc, char *argv[] ) {
       FD_SET(client_socket, &read_fds);
       printf("past client fdset\n");
       appendArr(cli_socks, client_socket);
+      continue;
     }
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       char input[100];
@@ -112,16 +113,22 @@ int main(int argc, char *argv[] ) {
       }
       // stop - stops the project, sends stop p staacket to clients
       // kill - ends every client process and stops the \server
+      continue;
     }
     // for every client descriptor stored, check if it has data to read
     int SIZEOF = 10;
     for (int i = 0; i < SIZEOF; i++) {
-      if (FD_ISSET(cli_socks[i], &read_fds)) {
+      if (FD_ISSET(cli_socks[i], &read_fds) && cli_socks[i] != 0) {
+        printf("Client socket %i has data ready??\n");
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
-
         struct packet *data = malloc(sizeof(struct packet));
         int bytes;
         
+        if (sign!=-1 && cli_socks[i]) {
+          printf("about to read from cli sock\n");
+          bytes = read(cli_socks[i], data, sizeof(struct packet));
+          printf("made it out\n");
+        }
 
         if (sign==-1) {
           data->type = PACKET_KILL;

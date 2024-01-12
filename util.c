@@ -7,10 +7,10 @@ void copyArr(int dest[], int copying[], int size) {
 }
 
 void removeIndex(int arr[], int size, int index) {
-  for (int i=index; i<size-1; i++) {
+  for (int i = index; i < size - 1; i++) {
     arr[i] = arr[i+1];
   }
-  arr[size-1] = 0;
+  arr[size - 1] = 0;
 }
 
 void appendArr(int arr[], int newData) {
@@ -109,7 +109,7 @@ int client_tcp_handshake(char * server_address) {
   
   free(hints);
   freeaddrinfo(results);
-
+  
   return sd;
 }
 
