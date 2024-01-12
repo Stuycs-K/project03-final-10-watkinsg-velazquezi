@@ -201,7 +201,7 @@ int clientLogic(int server_socket) {
 void printData(int arr[]) {
   for (int i=0; i<PACKET_SIZE; i++) {
     if (arr[i]) {
-      int color = (i%8)+30
+      int color = (i%8)+30;
       for (int j=0; j<arr[i]; j++) {
         printf("\e[0;%d>", color);
       }

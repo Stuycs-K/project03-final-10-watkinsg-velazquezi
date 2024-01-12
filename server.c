@@ -7,6 +7,9 @@ static int sign = 0;
 static void sighandler( int signo ) {
     
   if (signo==SIGQUIT) {
+    sign = 1;
+  }
+  if (signo==SIGINT) {
     sign = -1;
   }
   
@@ -40,6 +43,7 @@ int main(int argc, char *argv[] ) {
   int listen_socket = server_setup();
 
   signal(SIGQUIT, &sighandler);
+  signal(SIGINT, &sighandler);
   
   socklen_t sock_size;
   struct sockaddr_storage client_address;
@@ -113,23 +117,25 @@ int main(int argc, char *argv[] ) {
     // for every client descriptor stored, check if it has data to read
     int SIZEOF = 10;
     for (int i = 0; i < SIZEOF; i++) {
-      printf("Hi\n");
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
 
         struct packet *data = malloc(sizeof(struct packet));
-        int bytes = read(cli_socks[i], data, sizeof(struct packet));
+        int bytes;
+        if (sign!=-1) {
+          bytes = read(cli_socks[i], data, sizeof(struct packet));
+        }
+        
 
         if (sign==-1) {
           printf("bytes\n");
           close(cli_socks[i]);
           i--;
           SIZEOF--;
-          if (!SIZEOF) {
+          if (SIZEOF<=i) {
             exit(0);
           }
         } else if (!bytes) {
-          printf("bytes\n");
           close(cli_socks[i]);
           removeIndex(cli_socks, 10, i);
 
@@ -143,6 +149,9 @@ int main(int argc, char *argv[] ) {
           subserver_logic(cli_socks[i]);
         }
       }
+    }
+    if (sign==-1) {
+      exit(0);
     }
   }
 }
