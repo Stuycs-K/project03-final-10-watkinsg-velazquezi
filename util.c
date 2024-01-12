@@ -150,7 +150,18 @@ int clientLogic(int server_socket) {
   int arr[PACKET_SIZE];
   int copy[PACKET_SIZE];
   int seeds[PACKET_SEEDS];
-  
+  /* 
+    What does client do? 
+    {
+      connect - block (int handshake)
+      while (1) {
+        read - once
+        for (int i=0; i<PACKET_SEEDS; i++) {
+          read then write PACKET_SEED times until it stops
+        }
+      }
+    }
+  */
 
   while (1) {
     read(server_socket, data, sizeof(struct packet));
@@ -162,14 +173,22 @@ int clientLogic(int server_socket) {
       for (int i=0; i<PACKET_SEEDS; i++) {
 
         // allow for stop/kill while doing bogosorts (Stretch goal)
-        bogoSort(arr, PACKET_SIZE, seeds[i], copy);
+        if (!seeds[i]) {
+          bogoSort(arr, PACKET_SIZE, seeds[i], copy);
 
-        data->type = PACKET_RESULT;
-        copyArr(data->arr, copy, PACKET_SIZE);
+          data->type = PACKET_RESULT;
+          copyArr(data->arr, copy, PACKET_SIZE);
 
-        write(server_socket, data, sizeof(struct packet));
-        printf("Client has sent back a possible solution");
-        sleep(3);
+          read(server_socket, data, sizeof(struct packet));
+          if (!data->type) {
+            write(server_socket, data, sizeof(struct packet));
+            printf("Client has sent back a possible solution");
+            sleep(3);
+          }
+          else if (data->type==-1) {
+            i+=PACKET_SEEDS;
+          }
+        }
       }
     }
     else if (type==PACKET_KILL) {
@@ -181,17 +200,21 @@ int clientLogic(int server_socket) {
 
 void printData(int arr[]) {
   for (int i=0; i<PACKET_SIZE; i++) {
-    int color = (i%8)+30
-    for (int j=0; j<arr[i]; j++) {
-      printf("\e[0;%d>", color);
+    if (arr[i]) {
+      int color = (i%8)+30
+      for (int j=0; j<arr[i]; j++) {
+        printf("\e[0;%d>", color);
+      }
+      printf("\e[40m\n");
     }
-    printf("\e[40m\n");
   }
 }
 
 int subserver_logic(int client_socket) {
   struct packet *data = malloc(sizeof(struct packet));
   int arr[PACKET_SIZE];
+  data->type = PACKET_REQUEST;
+  write(client_socket, data, sizeof(struct packet));
   read(client_socket, data, sizeof(struct packet));
   copyArr(arr, data->arr, PACKET_SIZE);
   

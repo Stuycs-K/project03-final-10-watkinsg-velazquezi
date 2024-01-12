@@ -6,19 +6,40 @@ static int sign = 0;
 
 static void sighandler( int signo ) {
     
-    if (signo==SIGINT) {
-      sign = 1;
-    }
-    if (signo==SIGQUIT) {
-      sign = -1;
-    }
+  if (signo==SIGQUIT) {
+    sign = -1;
+  }
+  
 }
+
+/*
+  what does server do?
+  {
+    listen - once
+    while (1) {
+      if (connect) {
+        accept
+      }
+      if (terminal) {
+        smthn, but not rn
+        if (stop) {
+          write stop
+        }
+      }
+      for (int i=0; i<MAX_CLIENTS; i++) {
+        else {
+          write request
+          read the request
+        }
+      }
+    }
+  }
+*/
 
 int main(int argc, char *argv[] ) { 
   int listen_socket = server_setup();
 
   signal(SIGQUIT, &sighandler);
-  signal(SIGINT, &sighandler);
   
   socklen_t sock_size;
   struct sockaddr_storage client_address;
@@ -33,12 +54,11 @@ int main(int argc, char *argv[] ) {
 
   while (1) {
     printf("Please send a message: \n");
-    struct timeval timeout = { 1, 0 };
     int highestClient = findHighest(cli_socks, MAX_CLIENTS);
     int highestDescriptor = highestClient > listen_socket ? highestClient : listen_socket;
     FD_SET(STDIN_FILENO, &read_fds);
     FD_SET(listen_socket, &read_fds);
-    select(highestDescriptor+1, &read_fds, NULL, NULL, 0);
+    select(highestDescriptor+1, &read_fds, NULL, NULL, NULL);
 
     // if not started, check for new clients
     if (started == 0 && FD_ISSET(listen_socket, &read_fds)) {
@@ -52,57 +72,77 @@ int main(int argc, char *argv[] ) {
       char input[100];
       fgets(input, sizeof(input), stdin); // use read()?
       printf("input: %s\n", input);
-      printf("Please send a new message: \n");
+      printf("Please send a new message: ");
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
+      if (strcmp(input, "start\n")==0) {
+        started = 1;
+        int numclients = 0;
+        for (int i = 0; i < MAX_CLIENTS; i++) {
+          if (cli_socks[i] != 0) {
+            numclients++;
+          }
+        }
+        int seedsperclient = TOTAL_SEEDS / numclients;
+        int extra = TOTAL_SEEDS % numclients;
+        for (int i = 0; i < numclients; i++) {
+          struct packet *data = malloc(sizeof(struct packet));
+          data->type = PACKET_REQUEST;
+          int seeds[PACKET_SEEDS] = {0};
+          for (int j = seedsperclient * i + extra; j < seedsperclient * (i + 1) + extra; j++) {
+            appendArr(seeds, j);
+          }
+          copyArr(data->seeds, seeds, PACKET_SEEDS);
+          write(cli_socks[i], data, sizeof(struct packet));
+          // TODO: handle extra seeds
+          // if (i = 0) {
+          //   j -= extra;
+          //   for (int j = 0; j < extra; j++) {
+          //     appendArr()
+          //   }
+          // }
+          printf("Sent tasks to clients!\n");
+
+        }
+
+      }
       // stop - stops the project, sends stop p staacket to clients
-      // kill - ends every client process and stops the server
+      // kill - ends every client process and stops the \server
     }
     // for every client descriptor stored, check if it has data to read
     int SIZEOF = 10;
     for (int i = 0; i < SIZEOF; i++) {
+      printf("Hi\n");
       if (FD_ISSET(cli_socks[i], &read_fds)) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
+
+        struct packet *data = malloc(sizeof(struct packet));
+        int bytes = read(cli_socks[i], data, sizeof(struct packet));
+
         if (sign==-1) {
+          printf("bytes\n");
           close(cli_socks[i]);
           i--;
           SIZEOF--;
           if (!SIZEOF) {
             exit(0);
           }
-        }
-        
-        // else if (1/* INSERT CONDITION FOR DISCONNECT */) {
+        } else if (!bytes) {
+          printf("bytes\n");
+          close(cli_socks[i]);
+          removeIndex(cli_socks, 10, i);
 
-        //   //nit sign -1
-          
-        //   /*
-        //     Whatever the send method is goes here to send packets to KILL
-        //   */
-         
-
-        // } 
-        else if (sign==1) {
-
-          
-
-          /*
-            Whatever the send method is goes here to send packets to STOP
-          */
-          
-        }
-        else {
-          // subserver_logic(cli_socks[i]);
+          i--;
+          SIZEOF--;
+        } else if (sign==1) {
+          data->type = PACKET_STOP;
+          bytes = write(cli_socks[i], data, sizeof(struct packet));
+          err(bytes, "Server error");
+        } else {
+          subserver_logic(cli_socks[i]);
         }
       }
-    }   
-    if (sign==-1) {
-      exit(0);
     }
-
-      // ???
-      // figure out how to continually listen to clients while also having an initial 'lobby' before sending task packets out
-    sleep(1);
   }
 }

@@ -53,9 +53,10 @@ At home I added signal handling, including SIGINT and SIGQUIT which will be very
 
 ### 2024-01-10 - Fixed Server, added new util methods
 Helped fix the select issue where the file descriptors were being cleared after every slect call. Added a new method to find the biggest value in an array given the size of the array
+The server now quits successfully on ^C, while closing the clients. discovered the remove method needed to tell clients to close
 
-### 2024-01-11 - Brief description
-Expanded description including how much time was spent on task.
+### 2024-01-11 - Aligned the Client and Server
+The Client and Server now write and read the same number of times. Server now handles stopping clients midway through their bogosorting. Seemed to have ecountered an issue with client only going through the loop once
 
 ### 2024-01-12 - Brief description
 Expanded description including how much time was spent on task.
