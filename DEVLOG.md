@@ -57,6 +57,7 @@ The server now quits successfully on ^C, while closing the clients. discovered t
 
 ### 2024-01-11 - Aligned the Client and Server
 The Client and Server now write and read the same number of times. Server now handles stopping clients midway through their bogosorting. Seemed to have ecountered an issue with client only going through the loop once
+At home yesterday (I passed out cause I was up so late. Sorry for not updating), I worked some more on finalizing the signals, and discovered that ctrl+z can help close the terminal while we get ^C working 
 
 ### 2024-01-12 - Brief description
 Expanded description including how much time was spent on task.
