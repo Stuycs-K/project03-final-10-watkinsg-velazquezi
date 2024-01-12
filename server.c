@@ -81,6 +81,7 @@ int main(int argc, char *argv[] ) {
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
       if (!strcmp(input, "start\n")) {
+        printf("here?\n");
         started = 1;
         int numclients = 0;
         for (int i = 0; i < MAX_CLIENTS; i++) {
