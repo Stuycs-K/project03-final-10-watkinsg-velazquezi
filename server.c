@@ -39,9 +39,10 @@ static void sighandler( int signo ) {
   }
 */
 
-int main(int argc, char *argv[] ) { 
-  int listen_socket = server_setup();
+int main(int argc, char *argv[] ) {
+  // setvbuf(stdout, NULL, _IONBF, 0);
 
+  int listen_socket = server_setup();
   signal(SIGQUIT, &sighandler);
   signal(SIGINT, &sighandler);
   
@@ -71,6 +72,7 @@ int main(int argc, char *argv[] ) {
       FD_SET(client_socket, &read_fds);
       printf("past client fdset\n");
       appendArr(cli_socks, client_socket);
+      printf("first thing in cli_socks is %d\n", cli_socks[0]);
       continue;
     }
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
@@ -81,6 +83,7 @@ int main(int argc, char *argv[] ) {
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
       if (!strcmp(input, "start\n")) {
+        printf("in\n");
         started = 1;
         int numclients = 0;
         for (int i = 0; i < MAX_CLIENTS; i++) {
@@ -88,6 +91,8 @@ int main(int argc, char *argv[] ) {
             numclients++;
           }
         }
+        printf("%d clients with d seeds each (out of %d)\n", numclients, /*seedsperclient,*/ TOTAL_SEEDS);
+
         int seedsperclient = TOTAL_SEEDS / numclients;
         int extra = TOTAL_SEEDS % numclients;
         for (int i = 0; i < numclients; i++) {
@@ -123,7 +128,7 @@ int main(int argc, char *argv[] ) {
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
         struct packet *data = malloc(sizeof(struct packet));
         int bytes;
-        
+
         if (sign!=-1 && cli_socks[i]) {
           printf("about to read from cli sock\n");
           bytes = read(cli_socks[i], data, sizeof(struct packet));
