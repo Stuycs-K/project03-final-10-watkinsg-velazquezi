@@ -10,7 +10,7 @@ void removeIndex(int arr[], int size, int index) {
   for (int i=index; i<size-1; i++) {
     arr[i] = arr[i+1];
   }
-  arr[i-1] = 0;
+  arr[size-1] = 0;
 }
 
 void appendArr(int arr[], int newData) {
@@ -127,7 +127,7 @@ int server_setup() {
 	
   //this code should get around the address in use error
   int yes = 1;
-  int sockOpt =  setsockopt(clientd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
+  int sockOpt = setsockopt(clientd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
   err(sockOpt,"sockopt error");
 
   //bind the socket to address and port
@@ -189,12 +189,11 @@ int clientLogic(int server_socket) {
           else if (data->type==-1) {
             i+=PACKET_SEEDS;
           }
+          else if (data->type==-2) {
+            exit(0);
+          }
         }
       }
-    }
-    else if (type==PACKET_KILL) {
-      close(server_socket);
-      exit(0);
     }
   }
 }

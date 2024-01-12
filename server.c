@@ -121,12 +121,11 @@ int main(int argc, char *argv[] ) {
 
         struct packet *data = malloc(sizeof(struct packet));
         int bytes;
-        if (sign!=-1 && cli_socks[i]) {
-          bytes = read(cli_socks[i], data, sizeof(struct packet));
-        }
         
 
         if (sign==-1) {
+          data->type = PACKET_KILL;
+          write(cli_socks[i], data, sizeof(struct packet));
           close(cli_socks[i]);
           i--;
           SIZEOF--;
