@@ -33,6 +33,11 @@ int findHighest(int arr[], int size) {
 }
 
 void bogoSort(int arr[], int size, int random, int copy[]) {
+  for (int i=0; i<size; i++) {
+    printf("%d, ",arr[i]);
+  }
+  printf("\n");
+  
   srand(random);
   copyArr(copy, arr, size);
   for (int i=0; i<size; i++) {
@@ -41,11 +46,11 @@ void bogoSort(int arr[], int size, int random, int copy[]) {
     copy[x] = copy[i];
     copy[i] = temp;
   }
+  copyArr(arr, copy, size);
   for (int i=0; i<size; i++) {
     printf("%d, ",arr[i]);
   }
   printf("\n");
-  copyArr(arr, copy, size);
 }
 
 int amountOfClients(int cli_socks[]) {
