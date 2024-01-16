@@ -121,6 +121,12 @@ int main(int argc, char *argv[] ) {
         data->type = PACKET_REQUEST;
         int seedsperclient = TOTAL_SEEDS / numclients;
 
+        for (int i=0; i<PACKET_SEEDS; i++) {
+          if (data->seeds[i] == 0) {
+            data->seeds[i] = ranPos(20);
+          }
+        }
+
         for (int i=0; i<numclients; i++) {
           for (int j=0; j<seedsperclient; j++) {
             subserver_logic(cli_socks[i], data->arr);

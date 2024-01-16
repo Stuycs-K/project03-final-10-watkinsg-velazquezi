@@ -20,7 +20,7 @@
 
 #define TOTAL_SEEDS 15
 #define PACKET_SIZE 10
-#define PACKET_SEEDS 10
+#define PACKET_SEEDS 30
 #define MAX_CLIENTS 10
 
 

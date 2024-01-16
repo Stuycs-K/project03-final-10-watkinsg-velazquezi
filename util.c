@@ -212,7 +212,7 @@ int clientLogic(int server_socket) {
       else if (data->type==PACKET_STOP) {
         i+=PACKET_SEEDS;
       }
-      else if (data->type==PACKET_KILL) {
+      else if (data->type==PACKET_KILL || data->type==PACKET_RESULT) {
         exit(0);
       }
     }
