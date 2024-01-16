@@ -135,6 +135,15 @@ int main(int argc, char *argv[] ) {
           write(cli_socks[i], data, sizeof(struct packet));
         }
       }
+      else if (!strcmp(input, "kill\n")) {
+        int numclients = amountOfClients(cli_socks);
+        data->type = PACKET_KILL;
+        for (int i=numclients-1; i>=0; i--) {
+          write(cli_socks[i], data, sizeof(struct packet));
+          close(cli_socks[i]);
+          cli_socks[i] = 0;
+        }
+      }
       // stop - stops the project, sends stop p staacket to clients
       // kill - ends every client process and stops the \server
       continue;

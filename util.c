@@ -199,9 +199,8 @@ int clientLogic(int server_socket) {
 
       data->type = PACKET_RESULT;
       copyArr(data->arr, copy, PACKET_SIZE);
-      printf("reached\n");
       read(server_socket, data, sizeof(struct packet));
-      printf("reached\n");
+      printf("recieved: %d\n", data->type);
       if (data->type==PACKET_REQUEST) {
         
         printf("Client has sent back a possible solution\n");
