@@ -23,8 +23,3 @@ start - initializes the original array and sends them to the clients
 display - displays the clients bogoSorting
 stop - clients end their bogoSort loop, and wait for new input
 kill - Clients are disconnected from the server
-
-How does the user install/compile/run the program.
-How does the user interact with this program?
-
-
