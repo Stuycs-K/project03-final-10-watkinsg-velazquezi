@@ -81,7 +81,7 @@ int main(int argc, char *argv[] ) {
       // handle commands such as:
       // status - prints an overview of the current state including clients, etc
       // start - starts the project, sends tasks to clients
-      if (!strcmp(input, "start\n")) {
+      if (!strcmp(input, "start\n") && amountOfClients(cli_socks)) {
         printf("in\n");
         started = 1;
         int numclients = 0;
@@ -92,7 +92,7 @@ int main(int argc, char *argv[] ) {
         
         int extra = TOTAL_SEEDS % numclients;
         for (int j=0; j<PACKET_SIZE; j++) {
-          data->arr[j] = ranPos(4);
+          data->arr[j] = ranPos(6);
         }
         printData(data->arr);
         for (int i = 0; i < numclients; i++) {
@@ -116,23 +116,20 @@ int main(int argc, char *argv[] ) {
 
         }
       }
-      else if (!strcmp(input, "display\n")) {
+      else if (!strcmp(input, "display\n") && amountOfClients(cli_socks)) {
         int numclients = amountOfClients(cli_socks);
         data->type = PACKET_REQUEST;
         int seedsperclient = TOTAL_SEEDS / numclients;
-
-        for (int i=0; i<PACKET_SEEDS; i++) {
-          if (data->seeds[i] == 0) {
-            data->seeds[i] = ranPos(20);
-          }
-        }
 
         for (int i=0; i<numclients; i++) {
           for (int j=0; j<seedsperclient; j++) {
             subserver_logic(cli_socks[i], data->arr);
           }
+          sleep(3);
         }
-
+        for (int i=0; i<TOTAL_SEEDS; i++) {
+          data->seeds[i] += TOTAL_SEEDS;
+        }
       }
       else if (!strcmp(input, "stop\n")) {
         int numclients = amountOfClients(cli_socks);

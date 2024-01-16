@@ -200,16 +200,17 @@ int clientLogic(int server_socket) {
       data->type = PACKET_RESULT;
       copyArr(data->arr, copy, PACKET_SIZE);
       read(server_socket, data, sizeof(struct packet));
-      printf("recieved: %d\n", data->type);
       if (data->type==PACKET_REQUEST) {
-        
-        printf("Client has sent back a possible solution\n");
-        printf("seed: %d\n", seeds[i]);
-        bogoSort(arr, PACKET_SIZE, seeds[i], copy);
         write(server_socket, data, sizeof(struct packet));
-        sleep(1);
+        if (seeds[i]) {
+          printf("Client has sent back a possible solution\n");
+          printf("seed: %d\n", seeds[i]);
+          bogoSort(arr, PACKET_SIZE, seeds[i], copy);
+          sleep(1);
+        }
       }
       else if (data->type==PACKET_STOP) {
+        printf("\nProgram has stopped\n");
         i+=PACKET_SEEDS;
       }
       else if (data->type==PACKET_KILL || data->type==PACKET_RESULT) {

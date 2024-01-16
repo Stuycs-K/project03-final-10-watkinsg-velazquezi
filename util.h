@@ -18,9 +18,9 @@
 #define PACKET_RESULT 1
 #define PACKET_INFO 2
 
-#define TOTAL_SEEDS 15
+#define TOTAL_SEEDS 30
 #define PACKET_SIZE 10
-#define PACKET_SEEDS 30
+#define PACKET_SEEDS 10
 #define MAX_CLIENTS 10
 
 
