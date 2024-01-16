@@ -98,9 +98,9 @@ int main(int argc, char *argv[] ) {
         for (int i = 0; i < numclients; i++) {
           
           data->type = PACKET_REQUEST;
-          int seeds[PACKET_SEEDS] = {0};
-          for (int j = seedsperclient * i + extra; j < seedsperclient * (i + 1) + extra; j++) {
-            appendArr(seeds, j);
+          int seeds[PACKET_SEEDS];
+          for (int j = 0; j< PACKET_SEEDS; j++) {
+            seeds[j] = j+1 + i * seedsperclient;
           }
 
           copyArr(data->seeds, seeds, PACKET_SEEDS);
@@ -122,7 +122,7 @@ int main(int argc, char *argv[] ) {
         int seedsperclient = TOTAL_SEEDS / numclients;
 
         for (int i=0; i<numclients; i++) {
-          for (int j=0; j<seedsperclient; j++) {
+          for (int j=0; j<PACKET_SEEDS; j++) {
             subserver_logic(cli_socks[i], data->arr);
           }
           sleep(3);

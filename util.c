@@ -215,7 +215,7 @@ int clientLogic(int server_socket) {
           printf("Client has sent back a possible solution\n");
           printf("seed: %d\n", seeds[i]);
           bogoSort(arr, PACKET_SIZE, seeds[i], copy);
-          sleep(1);
+          sleep(2);
         }
       }
       else if (data->type==PACKET_STOP) {
