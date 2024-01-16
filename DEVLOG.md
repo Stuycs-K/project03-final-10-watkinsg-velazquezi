@@ -61,3 +61,4 @@ At home yesterday (I passed out cause I was up so late. Sorry for not updating),
 
 ### 2024-01-12 - Debugging as well as working on the print statment
 Expanded description including how much time was spent on task.
+Working on putting the printing in the Clients
