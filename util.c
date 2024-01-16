@@ -33,11 +33,6 @@ int findHighest(int arr[], int size) {
 }
 
 void bogoSort(int arr[], int size, int random, int copy[]) {
-  for (int i=0; i<size; i++) {
-    printf("%d, ",arr[i]);
-  }
-  printf("\n");
-  
   srand(random);
   copyArr(copy, arr, size);
   for (int i=0; i<size; i++) {
@@ -46,11 +41,7 @@ void bogoSort(int arr[], int size, int random, int copy[]) {
     copy[x] = copy[i];
     copy[i] = temp;
   }
-  copyArr(arr, copy, size);
-  for (int i=0; i<size; i++) {
-    printf("%d, ",arr[i]);
-  }
-  printf("\n");
+  printData(copy);
 }
 
 int amountOfClients(int cli_socks[]) {
@@ -204,7 +195,7 @@ int clientLogic(int server_socket) {
     for (int i=0; i<PACKET_SEEDS; i++) {
 
     // allow for stop/kill while doing bogosorts (Stretch goal)
-      bogoSort(arr, PACKET_SIZE, seeds[i], copy);
+      
 
       data->type = PACKET_RESULT;
       copyArr(data->arr, copy, PACKET_SIZE);
@@ -215,7 +206,7 @@ int clientLogic(int server_socket) {
         
         printf("Client has sent back a possible solution\n");
         printf("seed: %d\n", seeds[i]);
-        printData(data->arr);
+        bogoSort(arr, PACKET_SIZE, seeds[i], copy);
         write(server_socket, data, sizeof(struct packet));
         sleep(1);
       }

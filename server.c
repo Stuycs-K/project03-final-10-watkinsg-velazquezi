@@ -127,7 +127,9 @@ int main(int argc, char *argv[] ) {
             subserver_logic(cli_socks[i], data->arr);
           }
         }
+
       }
+      else if (!strcmp(input, "display\n"))
       // stop - stops the project, sends stop p staacket to clients
       // kill - ends every client process and stops the \server
       continue;
