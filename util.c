@@ -6,6 +6,15 @@ void copyArr(int dest[], int copying[], int size) {
   }
 }
 
+int checker(int arr[]) {
+  for (int i=0; i<PACKET_SIZE-1; i++) {
+    if (arr[i]>arr[i+1]) {
+      return -1;
+    }
+  }
+  return 0;
+}
+
 void removeIndex(int arr[], int size, int index) {
   for (int i = index; i < size - 1; i++) {
     arr[i] = arr[i+1];
@@ -227,6 +236,12 @@ int subserver_logic(int client_socket, int arr[]) {
   write(client_socket, data, sizeof(struct packet));
   read(client_socket, data, sizeof(struct packet));
   copyArr(arr, data->arr, PACKET_SIZE);
+  int value = checker(arr);
+  if (value==0) {
+    printf("Answer found\n");
+    printData(arr);
+    exit(0);
+  }
 }
 
 int server_tcp_handshake(int listen_socket){
