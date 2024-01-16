@@ -43,6 +43,16 @@ void bogoSort(int arr[], int size, int random, int copy[]) {
   }
 }
 
+int amountOfClients(int cli_socks[]) {
+  int numclients = 0;
+  for (int i = 0; i < MAX_CLIENTS; i++) {
+    if (cli_socks[i] != 0) {
+      numclients++;
+    }
+  }
+  return numclients;
+}
+
 void err(int i, char*message){
   if(i < 0){
 	  printf("Error: %s - %s\n",message, strerror(errno));
@@ -179,17 +189,18 @@ int clientLogic(int server_socket) {
 
           data->type = PACKET_RESULT;
           copyArr(data->arr, copy, PACKET_SIZE);
-
+          printf("Reached\n");
           read(server_socket, data, sizeof(struct packet));
-          if (!data->type) {
+          if (data->type==PACKET_REQUEST) {
+            printf("Reached\n");
             write(server_socket, data, sizeof(struct packet));
             printf("Client has sent back a possible solution");
             sleep(3);
           }
-          else if (data->type==-1) {
+          else if (data->type==PACKET_STOP) {
             i+=PACKET_SEEDS;
           }
-          else if (data->type==-2) {
+          else if (data->type==PACKET_KILL) {
             exit(0);
           }
         }
@@ -214,8 +225,11 @@ int subserver_logic(int client_socket) {
   struct packet *data = malloc(sizeof(struct packet));
   int arr[PACKET_SIZE];
   data->type = PACKET_REQUEST;
+  printf("Reached\n");
   write(client_socket, data, sizeof(struct packet));
+  printf("Reached\n");
   read(client_socket, data, sizeof(struct packet));
+  printf("Reached\n");
   copyArr(arr, data->arr, PACKET_SIZE);
   
   printData(arr);
