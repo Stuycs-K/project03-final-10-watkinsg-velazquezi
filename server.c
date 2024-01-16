@@ -91,6 +91,10 @@ int main(int argc, char *argv[] ) {
 
         
         int extra = TOTAL_SEEDS % numclients;
+        for (int j=0; j<PACKET_SIZE; j++) {
+          data->arr[j] = ranPos(4);
+        }
+        printData(data->arr);
         for (int i = 0; i < numclients; i++) {
           
           data->type = PACKET_REQUEST;
@@ -98,11 +102,6 @@ int main(int argc, char *argv[] ) {
           for (int j = seedsperclient * i + extra; j < seedsperclient * (i + 1) + extra; j++) {
             appendArr(seeds, j);
           }
-          for (int j=0; j<PACKET_SIZE; j++) {
-            data->arr[j] = ranPos(4);
-          }
-          printData(data->arr);
-
 
           copyArr(data->seeds, seeds, PACKET_SEEDS);
           write(cli_socks[i], data, sizeof(struct packet));
@@ -129,7 +128,13 @@ int main(int argc, char *argv[] ) {
         }
 
       }
-      else if (!strcmp(input, "display\n"))
+      else if (!strcmp(input, "stop\n")) {
+        int numclients = amountOfClients(cli_socks);
+        data->type = PACKET_STOP;
+        for (int i=0; i<numclients; i++) {
+          write(cli_socks[i], data, sizeof(struct packet));
+        }
+      }
       // stop - stops the project, sends stop p staacket to clients
       // kill - ends every client process and stops the \server
       continue;
