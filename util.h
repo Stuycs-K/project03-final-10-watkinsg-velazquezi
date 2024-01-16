@@ -36,14 +36,16 @@ struct packet {
 #define PORT "19230"
 #define BUFFER_SIZE 1024
 void copyArr(int dest[], int copying[], int size);
+int ranPos(int size);
 int amountOfClients(int cli_socks[]);
 void err(int i, char*message);
 int server_setup();
 int client_tcp_handshake(char*server_address);
 int server_tcp_handshake(int listen_socket);
 int clientLogic(int server_socket);
-int subserver_logic(int client_socket);
+int subserver_logic(int client_socket, int arr[]);
 void removeIndex(int arr[], int size, int index);
 void appendArr(int arr[], int newData);
 int findHighest(int arr[], int size);
+void printData(int arr[]);
 #endif

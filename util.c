@@ -153,6 +153,18 @@ int server_setup() {
   return clientd;
 }
 
+void printData(int arr[]) {
+  for (int i=0; i<PACKET_SIZE; i++) {
+    if (arr[i]!=0) {
+      int color = (i%8)+30;
+      for (int j=0; j<arr[i]; j++) {
+        printf("\033[%dm>", color);
+      }
+      printf("\033[0m\n");
+    }
+  }
+}
+
 int clientLogic(int server_socket) {
   struct packet *data = malloc(sizeof(struct packet));
   int bytes = read(server_socket, data, sizeof(struct packet));
@@ -189,13 +201,15 @@ int clientLogic(int server_socket) {
 
           data->type = PACKET_RESULT;
           copyArr(data->arr, copy, PACKET_SIZE);
-          printf("Reached\n");
+          printf("reached\n");
           read(server_socket, data, sizeof(struct packet));
+          printf("reached\n");
           if (data->type==PACKET_REQUEST) {
-            printf("Reached\n");
-            write(server_socket, data, sizeof(struct packet));
+            
             printf("Client has sent back a possible solution");
-            sleep(3);
+            printData(data->arr);
+            write(server_socket, data, sizeof(struct packet));
+            sleep(1);
           }
           else if (data->type==PACKET_STOP) {
             i+=PACKET_SEEDS;
@@ -209,29 +223,17 @@ int clientLogic(int server_socket) {
   }
 }
 
-void printData(int arr[]) {
-  for (int i=0; i<PACKET_SIZE; i++) {
-    if (arr[i]) {
-      int color = (i%8)+30;
-      for (int j=0; j<arr[i]; j++) {
-        printf("\e[0;%d>", color);
-      }
-      printf("\e[40m\n");
-    }
-  }
-}
-
-int subserver_logic(int client_socket) {
+int subserver_logic(int client_socket, int arr[]) {
   struct packet *data = malloc(sizeof(struct packet));
-  int arr[PACKET_SIZE];
   data->type = PACKET_REQUEST;
-  printf("Reached\n");
+  copyArr(data->arr, arr, PACKET_SIZE);
   write(client_socket, data, sizeof(struct packet));
-  printf("Reached\n");
   read(client_socket, data, sizeof(struct packet));
-  printf("Reached\n");
   copyArr(arr, data->arr, PACKET_SIZE);
-  
+  for (int i=0; i<PACKET_SIZE; i++) {
+    printf("%d, ", data->arr[i]);
+  }
+  printf("\n");
   printData(arr);
 }
 

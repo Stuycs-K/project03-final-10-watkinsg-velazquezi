@@ -41,11 +41,10 @@ static int sign = 0;
 
 int main(int argc, char *argv[] ) {
   // setvbuf(stdout, NULL, _IONBF, 0);
-
   int listen_socket = server_setup();
   // signal(SIGQUIT, &sighandler);
   // signal(SIGINT, &sighandler);
-  
+  struct packet *data = malloc(sizeof(struct packet));
   socklen_t sock_size;
   struct sockaddr_storage client_address;
   sock_size = sizeof(client_address);
@@ -93,12 +92,18 @@ int main(int argc, char *argv[] ) {
         
         int extra = TOTAL_SEEDS % numclients;
         for (int i = 0; i < numclients; i++) {
-          struct packet *data = malloc(sizeof(struct packet));
+          
           data->type = PACKET_REQUEST;
           int seeds[PACKET_SEEDS] = {0};
           for (int j = seedsperclient * i + extra; j < seedsperclient * (i + 1) + extra; j++) {
             appendArr(seeds, j);
           }
+          for (int j=0; j<PACKET_SIZE; j++) {
+            data->arr[j] = ranPos(4);
+          }
+          printData(data->arr);
+
+
           copyArr(data->seeds, seeds, PACKET_SEEDS);
           write(cli_socks[i], data, sizeof(struct packet));
           // TODO: handle extra seeds
@@ -113,10 +118,16 @@ int main(int argc, char *argv[] ) {
         }
       }
       else if (!strcmp(input, "display\n")) {
-          int numclients = amountOfClients(cli_socks);
-          for (int i=0; i<numclients; i++) {
-            subserver_logic(cli_socks[i]);
+        int numclients = amountOfClients(cli_socks);
+        data->type = PACKET_REQUEST;
+        int seedsperclient = TOTAL_SEEDS / numclients;
+
+        for (int i=0; i<numclients; i++) {
+          write(cli_socks[i], data, sizeof(struct packet));
+          for (int j=0; j<seedsperclient; j++) {
+            subserver_logic(cli_socks[i], data->arr);
           }
+        }
       }
       // stop - stops the project, sends stop p staacket to clients
       // kill - ends every client process and stops the \server
@@ -128,7 +139,6 @@ int main(int argc, char *argv[] ) {
       if (FD_ISSET(cli_socks[i], &read_fds) && cli_socks[i] != 0) {
         printf("Client socket %d has data ready??\n", i);
         // check if client disconnected (read() returns 0), if so then remove from array with remove()
-        struct packet *data = malloc(sizeof(struct packet));
         int bytes;
 
         if (sign!=-1 && cli_socks[i]) {
@@ -158,7 +168,7 @@ int main(int argc, char *argv[] ) {
           err(bytes, "Server error");
         } else {
           if (cli_socks[i]) {
-            subserver_logic(cli_socks[i]);
+            subserver_logic(cli_socks[i], data->arr);
           }
         }
       }
