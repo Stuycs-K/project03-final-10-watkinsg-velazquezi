@@ -36,6 +36,7 @@ struct packet {
 #define PORT "19230"
 #define BUFFER_SIZE 1024
 void copyArr(int dest[], int copying[], int size);
+int amountOfClients(int cli_socks[]);
 void err(int i, char*message);
 int server_setup();
 int client_tcp_handshake(char*server_address);
