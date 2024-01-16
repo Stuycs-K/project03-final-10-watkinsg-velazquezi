@@ -41,6 +41,11 @@ void bogoSort(int arr[], int size, int random, int copy[]) {
     copy[x] = copy[i];
     copy[i] = temp;
   }
+  for (int i=0; i<size; i++) {
+    printf("%d, ",arr[i]);
+  }
+  printf("\n");
+  copyArr(arr, copy, size);
 }
 
 int amountOfClients(int cli_socks[]) {
@@ -187,37 +192,33 @@ int clientLogic(int server_socket) {
   */
 
   while (1) {
-    read(server_socket, data, sizeof(struct packet));
     int type = data->type;
     copyArr(arr, data->arr, PACKET_SIZE);
     copyArr(seeds, data->seeds, PACKET_SIZE);
 
-    if (type==PACKET_REQUEST) {
-      for (int i=0; i<PACKET_SEEDS; i++) {
+    for (int i=0; i<PACKET_SEEDS; i++) {
 
-        // allow for stop/kill while doing bogosorts (Stretch goal)
-        if (!seeds[i]) {
-          bogoSort(arr, PACKET_SIZE, seeds[i], copy);
+    // allow for stop/kill while doing bogosorts (Stretch goal)
+      bogoSort(arr, PACKET_SIZE, seeds[i], copy);
 
-          data->type = PACKET_RESULT;
-          copyArr(data->arr, copy, PACKET_SIZE);
-          printf("reached\n");
-          read(server_socket, data, sizeof(struct packet));
-          printf("reached\n");
-          if (data->type==PACKET_REQUEST) {
-            
-            printf("Client has sent back a possible solution");
-            printData(data->arr);
-            write(server_socket, data, sizeof(struct packet));
-            sleep(1);
-          }
-          else if (data->type==PACKET_STOP) {
-            i+=PACKET_SEEDS;
-          }
-          else if (data->type==PACKET_KILL) {
-            exit(0);
-          }
-        }
+      data->type = PACKET_RESULT;
+      copyArr(data->arr, copy, PACKET_SIZE);
+      printf("reached\n");
+      read(server_socket, data, sizeof(struct packet));
+      printf("reached\n");
+      if (data->type==PACKET_REQUEST) {
+        
+        printf("Client has sent back a possible solution\n");
+        printf("seed: %d\n", seeds[i]);
+        printData(data->arr);
+        write(server_socket, data, sizeof(struct packet));
+        sleep(1);
+      }
+      else if (data->type==PACKET_STOP) {
+        i+=PACKET_SEEDS;
+      }
+      else if (data->type==PACKET_KILL) {
+        exit(0);
       }
     }
   }
@@ -230,11 +231,6 @@ int subserver_logic(int client_socket, int arr[]) {
   write(client_socket, data, sizeof(struct packet));
   read(client_socket, data, sizeof(struct packet));
   copyArr(arr, data->arr, PACKET_SIZE);
-  for (int i=0; i<PACKET_SIZE; i++) {
-    printf("%d, ", data->arr[i]);
-  }
-  printf("\n");
-  printData(arr);
 }
 
 int server_tcp_handshake(int listen_socket){

@@ -123,7 +123,6 @@ int main(int argc, char *argv[] ) {
         int seedsperclient = TOTAL_SEEDS / numclients;
 
         for (int i=0; i<numclients; i++) {
-          write(cli_socks[i], data, sizeof(struct packet));
           for (int j=0; j<seedsperclient; j++) {
             subserver_logic(cli_socks[i], data->arr);
           }
